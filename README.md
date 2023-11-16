@@ -4,6 +4,6 @@ Les membres du Projet sont:
 
 - ARBELBIDE         Eneko       TP4
 - HERMANN           Anthony     TP3 (Alternant)
-- MORANCE           Killian     TP3             
+- MORANCE           Kyllian     TP3             
 - MONTOURO          Maxime      TP4             
 - PICOULET SONDER   Alexandre   TP4             
