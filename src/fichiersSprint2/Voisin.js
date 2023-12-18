@@ -26,7 +26,10 @@ class Voisin extends Donnee {
     }
 
     //ENCAPSULATION
-
+    /**
+     * 
+     * @brief get&set des attributs  nom, mot, ArrayDonnee
+     */
     getNom(){
         return this.nom;
     }
@@ -51,7 +54,12 @@ class Voisin extends Donnee {
 
     //METHODES SPECIFIQUES
     damerauLevenshteinDistance(str1, str2) {
-            
+    /**
+     * @brief : methode qui permet de calculer la distance de Damerau-Levenshtein entre deux chaines de caractères
+     * @param : str1, str2
+     * @return : distance de Damerau-Levenshtein entre deux chaines de caractères
+     */
+
         const longueur1 = str1.length;
         const longueur2 = str2.length;
         const matrice= Array(longueur1 + 1).fill(null).map(() => Array(longueur2 + 1).fill(null)); //  crée une matrice vide avec des dimensions longueur1 + 1 x longueur2 + 1
@@ -91,49 +99,84 @@ class Voisin extends Donnee {
         return matrice[longueur1][longueur2];
     }
 
+    recupererCoordonnesLettre(lettre){
+
+    /**
+     * @brief : methode qui permet de recuperer les coordonnees d'une lettre dans la matrice clavier
+     * @param : lettre
+     * @return : coordonnees de la lettre dans la matrice clavier
+     */
+
+        for(let i = 0; i< matrice.length; i++){
+            for(let j = 0; j< matrice[i].length; j++){
+                if(matrice[i][j] == lettre){
+                    return [i,j];
+                }
+            }
+        }
+    }
+
     correctionClavier(){
-    /*
-    *   @brief : methode qui permet de corriger un mot saisie au clavier
-    *   @param : aucun
-    *  @return : aucun
-    *  Cet alogorithme permet de comparer un mot saisie au clavier avec la matrice clavier AZERTY
-    * 
-    * 
+    /** 
+    *  @brief : methode qui permet de comparer un mot saisie au clavier et permet d'en ressortir un mot corrige avec un nombre d'erreur < 2
+    *  @param : aucun
+    *  @return : motCorriger 
     */
         let mot = this.getNom(); //recupere du mot saisie
         var compteur = 0; //compteur de faute
+        let motCorriger = ""; //mot corriger
 
         for(let i = 0; i< mot.length; i++){ //parcours le mot saisie
-            for(let j = 0; j< matrice.length; j++){ //parcours la matrice
-                for(let k = 0; k< matrice[j].length; k++){ //parcours la matrice
-                    do{
-                        if(mot[i] == matrice[j][k]){}; 
-                            //si la lettre n'est pas la bonne la bonne dans la matrice clavier
-                            
-                            //mettre en place un switch 
-                            switch(mot[i]){
+            indiceX = this.recupererCoordonnesLettre(mot[i][0]); //recupere la coordonnee X de la lettre dans la matrice clavier
+            indiceY = this.recupererCoordonnesLettre(mot[i][1]); //recupere la coordonne Y de la lettre dans la matrice clavier
+                if(mot[i] != matrice[indiceX][indiceY]){
+                //si la lettre n'est pas la bonne la bonne dans la matrice clavier
+                    for(let j = indiceX; j< matrice.length; j++){
+                        for(let k=indiceY; k< matrice[j].length; k++){
+                            //on regarde si les coordonnees de la lettre recupere dans la matrice clavier sont les bonnes par rapport au mot saisie
+                            switch(matrice[indiceX][indiceY]){
+                                case matrice[j+1][k]:
+                                    compteur++;
+                                    break;
 
-
-                            else if(mot[i] == matrice[j+1][k]){  //sinon si la lettre du mot est differente de la lettre de la matrice
-                                compteur++;}  //sinon il y a une faute
-                            else if(mot[i] == matrice[j][k+1]){ //sinon si la lettre du mot est differente de la lettre de la matrice
-                                compteur++;} //sinon il y a une faute
-                            else if(mot[i] == matrice[j+1][k+1]){ //sinon si la lettre du mot est differente de la lettre de la matrice
-                                compteur++;} //sinon il y a une faute
-                            else if(mot[i] == matrice[j-1][k]){ //sinon si la lettre du mot est differente de la lettre de la matrice
-                                compteur++;} //sinon il y a une faute
-                            else if(mot[i] == matrice[j][k-1]){ //sinon si la lettre du mot est differente de la lettre de la matrice
-                                compteur++;} //sinon il y a une faute
-                            else if(mot[i] == matrice[j-1][k-1]){ //sinon si la lettre du mot est differente de la lettre de la matrice
-                                compteur++;} //sinon il y a une faute
-                            else if(mot[i] == matrice[j+1][k-1]){ //sinon si la lettre du mot est differente de la lettre de la matrice
-                                compteur++;} //sinon il y a une faute
-                            else if(mot[i] == matrice[j-1][k+1]){ //sinon si la lettre du mot est differente de la lettre de la matrice
-                                compteur++;} //sinon il y a une faute
+                                case matrice[j][k+1]:
+                                    compteur++;
+                                    motCorriger[i] = matrice[j][k+1];
+                                    break;
+                                case matrice[j+1][k+1]:
+                                    compteur++;
+                                    motCorriger[i] = matrice[j+1][k+1];
+                                    break;
+                                case matrice[j-1][k]:
+                                    compteur++;
+                                    motCorriger[i] = matrice[j-1][k];
+                                    break;
+                                case matrice[j][k-1]:
+                                    compteur++;
+                                    motCorriger[i] = matrice[j][k-1];
+                                    break;
+                                case matrice[j-1][k-1]:
+                                    compteur++;
+                                    motCorriger[i] = matrice[j-1][k-1];
+                                    break;
+                                case matrice[j+1][k-1]:
+                                    compteur++;
+                                    motCorriger[i] = matrice[j+1][k-1];
+                                    break;
+                                case matrice[j-1][k+1]:
+                                    compteur++;
+                                    motCorriger[i] = matrice[j-1][k+1];
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
-                    }while(compteur !=2); //tant que le compteur n'est pas egal a 2
+                    }   
                 }
-            }
+                else{
+                    motCorriger[i] = mot[i];
+                }
+            return motCorriger; // retourne le nombre d'erreurs entre le mot saisie et la matrice clavier
         }
     }
 }

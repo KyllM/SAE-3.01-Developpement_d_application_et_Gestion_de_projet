@@ -6,10 +6,10 @@
  * @author MaxMontouro 
  */
 
-//import {Donnee} from "./Donnee.js"; ici Donnee.js est deja inclu
-import {Mot} from "./Mot.js";
-import {Vinyle} from "./Vinyle.js";
-import {Voisin} from "./Voisin.js";
+    //import {Donnee} from "./Donnee.js"; ici Donnee.js est deja inclu
+    import {Mot} from "./Mot.js";
+    import {Vinyle} from "./Vinyle.js";
+    import {Voisin} from "./Voisin.js";
 
 
 
@@ -24,5 +24,6 @@ function main(){
 
     //declaration des variables
     let uneDonnee = new Donnee();
-
+    let unMot = new Mot();
+    let unVinyle = new Vinyle();
 }
