@@ -1,0 +1,173 @@
+<?xml version="1.1"?>
+<!DOCTYPE Tabula_Rasa>
+<Algorithme>
+  <nom>algoGeneral</nom>
+  <date_creation>19/12/2023 14:03</date_creation>
+  <Elements>
+    <Action>
+      <Position>654;44</Position>
+      <StyleLien>2</StyleLien>
+      <PreAssertion>mot</PreAssertion>
+      <PostAssertion>motCorrige</PostAssertion>
+      <Titre>Algorithme général de correction de mots</Titre>
+      <DetailsVisible>1</DetailsVisible>
+      <DetailsVideVisible>1</DetailsVideVisible>
+      <Enfants>
+        <Action>
+          <Position>-1;201</Position>
+          <StyleLien>1</StyleLien>
+          <PreAssertion>?</PreAssertion>
+          <PostAssertion>motCorrige, 
+distanceMax,
+ensembleMots</PostAssertion>
+          <Titre>Initialisation</Titre>
+          <DetailsVisible>1</DetailsVisible>
+          <DetailsVideVisible>0</DetailsVideVisible>
+          <Enfants/>
+        </Action>
+        <Action>
+          <Position>298;202</Position>
+          <StyleLien>1</StyleLien>
+          <PreAssertion>mot</PreAssertion>
+          <PostAssertion>listeMotAvecDamerauLevenshtein</PostAssertion>
+          <Titre>Obtenir l'ensemble des &#xd;
+mots ayant une distance&#xd;
+(Damerau-Levenshtein) de &#xd;
+la longueur de mot / 4 + 1</Titre>
+          <DetailsVisible>1</DetailsVisible>
+          <DetailsVideVisible>1</DetailsVideVisible>
+          <Enfants/>
+        </Action>
+        <Action>
+          <Position>1457;200</Position>
+          <StyleLien>2</StyleLien>
+          <PreAssertion>motCorrige</PreAssertion>
+          <PostAssertion>?</PostAssertion>
+          <Titre>retour</Titre>
+          <DetailsVisible>1</DetailsVisible>
+          <DetailsVideVisible>0</DetailsVideVisible>
+          <Enfants>
+            <Action>
+              <Position>1542;277</Position>
+              <StyleLien>1</StyleLien>
+              <PreAssertion>?</PreAssertion>
+              <PostAssertion>?</PostAssertion>
+              <Titre>return motCorrige</Titre>
+              <DetailsVisible>1</DetailsVisible>
+              <DetailsVideVisible>0</DetailsVideVisible>
+              <Enfants/>
+            </Action>
+          </Enfants>
+        </Action>
+        <Action>
+          <Position>617;338</Position>
+          <StyleLien>2</StyleLien>
+          <PreAssertion>mot</PreAssertion>
+          <PostAssertion>motLePlusPertinant</PostAssertion>
+          <Titre>obtenir le mot le plus probable par rapport à la saisie clavier avec au plus 2 erreurs</Titre>
+          <DetailsVisible>1</DetailsVisible>
+          <DetailsVideVisible>1</DetailsVideVisible>
+          <Enfants>
+            <Procedure>
+              <Position>591;422</Position>
+              <StyleLien>1</StyleLien>
+              <PreAssertion>mot, matrice</PreAssertion>
+              <PostAssertion>motPertinant</PostAssertion>
+              <Titre>corrigerClavier</Titre>
+              <DetailsVisible>1</DetailsVisible>
+              <DetailsVideVisible>1</DetailsVideVisible>
+              <Enfants/>
+            </Procedure>
+          </Enfants>
+        </Action>
+        <Condition>
+          <Position>1313.5;367</Position>
+          <StyleLien>0</StyleLien>
+          <estUnique>0</estUnique>
+          <operationsLogiques>
+            <operation>
+              <Titre>mot avec distance = 0 existe</Titre>
+              <Enfants>
+                <Action>
+                  <Position>1087;478</Position>
+                  <StyleLien>1</StyleLien>
+                  <PreAssertion>?</PreAssertion>
+                  <PostAssertion>?</PostAssertion>
+                  <Titre>Pas de modification 
+motLePlusPertinant = mot</Titre>
+                  <DetailsVisible>1</DetailsVisible>
+                  <DetailsVideVisible>0</DetailsVideVisible>
+                  <Enfants/>
+                </Action>
+                <Sortie>
+                  <Position>1328;488</Position>
+                </Sortie>
+              </Enfants>
+            </operation>
+            <operation>
+              <Titre>Sinon</Titre>
+              <Enfants>
+                <Condition>
+                  <Position>1463.5;482</Position>
+                  <StyleLien>0</StyleLien>
+                  <estUnique>0</estUnique>
+                  <operationsLogiques>
+                    <operation>
+                      <Titre>mot avec distance &lt;=&#xd;
+(mot/4+1) existe</Titre>
+                      <Enfants>
+                        <Procedure>
+                          <Position>1313;580</Position>
+                          <StyleLien>1</StyleLien>
+                          <PreAssertion>?</PreAssertion>
+                          <PostAssertion>?</PostAssertion>
+                          <Titre>obtenirMotPlusProbable(mot)</Titre>
+                          <DetailsVisible>1</DetailsVisible>
+                          <DetailsVideVisible>0</DetailsVideVisible>
+                          <Enfants/>
+                        </Procedure>
+                        <Sortie>
+                          <Position>1557;596</Position>
+                        </Sortie>
+                      </Enfants>
+                    </operation>
+                    <operation>
+                      <Titre>Sinon</Titre>
+                      <Enfants>
+                        <Action>
+                          <Position>1622;586</Position>
+                          <StyleLien>1</StyleLien>
+                          <PreAssertion>?</PreAssertion>
+                          <PostAssertion>?</PostAssertion>
+                          <Titre>Pas de modification &#xd;
+motCorrige = mot</Titre>
+                          <DetailsVisible>1</DetailsVisible>
+                          <DetailsVideVisible>0</DetailsVideVisible>
+                          <Enfants/>
+                        </Action>
+                      </Enfants>
+                    </operation>
+                  </operationsLogiques>
+                </Condition>
+              </Enfants>
+            </operation>
+          </operationsLogiques>
+        </Condition>
+        <Action>
+          <Position>841;196</Position>
+          <StyleLien>1</StyleLien>
+          <PreAssertion>motPertinant,
+listeMotAvecDamerauLevenshtein</PreAssertion>
+          <PostAssertion>motLePlusPertinents</PostAssertion>
+          <Titre>Verifier cohérence entre damarau-levenshtein et saisie clavier</Titre>
+          <DetailsVisible>1</DetailsVisible>
+          <DetailsVideVisible>1</DetailsVideVisible>
+          <Enfants/>
+        </Action>
+      </Enfants>
+    </Action>
+    <Sortie>
+      <Position>2038;348</Position>
+    </Sortie>
+  </Elements>
+</Algorithme>
