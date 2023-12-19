@@ -5,10 +5,6 @@
  * @date 2021-05-18
  */
 
-//------------------------------------
-//      Classe Donnee
-//------------------------------------
-
 
 export const  matrice = new Array();
 matrice = [
@@ -18,6 +14,34 @@ matrice = [
     ['w', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '!', '!']
   ]
 
+  /**
+   * @brief récupération des données du fichier JSON
+   * @param aucun 
+   * @return tableauJSON (tableau de données contenant les id du fichier json)
+  */
+
+export function recuperationDonneesJSON(){
+    let tableauJSON = new Array();
+
+    //récupération des données du fichier JSON
+    fetch('donnees.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Erreur HTTP : " + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        for(let i = 0; i < data.length; i++){
+            tableauJSON.push(data[i]);
+        }
+    });
+    return tableauJSON;
+}
+
+//------------------------------------
+//      Classe Donnee
+//------------------------------------
 
 export class Donnee{
 

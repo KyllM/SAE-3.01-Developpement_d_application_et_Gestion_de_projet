@@ -18,10 +18,25 @@ import { matrice } from "./donnee";
 class Voisin extends Donnee {
 
     ArrayDonnee = new Array(); //tableau de mot
+    listeMotAvecDamerauLevenshteinsteMot = new Array(); //tableau de mot avec distance de Damerau-Levenshtein < 2
 
     //CONSTRUCTEUR
-    constructor(unNom){
+    /**
+     * @brief constructeur de la classe Voisin
+     * @param {*} unNom 
+     * @param {*} unVinyle 
+     * @param {*} unArtiste 
+     * @param {*} unGenre 
+     * @param {*} unTitre 
+     * @param {*} unTag 
+     */
+    constructor(unNom, unVinyle, unArtiste, unGenre, unTitre, unTag){
         super(Mot);
+        super(unVinyle);
+        super(unArtiste);
+        super(unGenre);
+        super(unTitre);
+        super(unTag);
         this.setNom(unNom);
     }
 
@@ -62,14 +77,14 @@ class Voisin extends Donnee {
 
         const longueur1 = str1.length;
         const longueur2 = str2.length;
-        const matrice= Array(longueur1 + 1).fill(null).map(() => Array(longueur2 + 1).fill(null)); //  crée une matrice vide avec des dimensions longueur1 + 1 x longueur2 + 1
+        const tableau= Array(longueur1 + 1).fill(null).map(() => Array(longueur2 + 1).fill(null)); //  crée une matrice vide avec des dimensions longueur1 + 1 x longueur2 + 1
 
         for (let i = 0; i <= longueur1; i++) {
-            matrice[i][0] = i;
+            tableau[i][0] = i;
         }
 
         for (let j = 0; j <= longueur2; j++) {
-            matrice[0][j] = j;
+            tableau[0][j] = j;
         }
 
         for (let i = 1; i <= longueur1; i++) {
@@ -84,21 +99,26 @@ class Voisin extends Donnee {
                     coutSubstitution = 1;
                 }
                 
-                matrice[i][j] = Math.min(
-                    matrice[i - 1][j] + 1, // Suppression
-                    matrice[i][j - 1] + 1, // Insertion
-                    matrice[i - 1][j - 1] + coutSubstitution // Substitution
+                tableau[i][j] = Math.min(
+                    tableau[i - 1][j] + 1, // Suppression
+                    tableau[i][j - 1] + 1, // Insertion
+                    tableau[i - 1][j - 1] + coutSubstitution // Substitution
                 );
 
                 if (i > 1 && j > 1 && str1[i - 1] === str2[j - 2] && str1[i - 2] === str2[j - 1]) {
-                    matrice[i][j] = Math.min(matrice[i][j], matrice[i - 2][j - 2] + coutSubstitution); // Transposition
+                    tableau[i][j] = Math.min(tableau[i][j], tableau[i - 2][j - 2] + coutSubstitution); // Transposition
                 }
             }
         }
-        //console.log(matrice[longueur1][longueur2])
-        return matrice[longueur1][longueur2];
+        //console.log(tableau[longueur1][longueur2])
+        return tableau[longueur1][longueur2];
     }
 
+    ajouterTableau(mot, listeMotAvecDamerauLevenshteinsteMot){
+        if(this.damarauLevenshteinDistance(mot, this.getMot()) < 2){
+            listeMotAvecDamerauLevenshteinsteMot.push(mot);
+        }
+    }
     recupererCoordonnesLettre(lettre){
 
     /**
@@ -116,16 +136,17 @@ class Voisin extends Donnee {
         }
     }
 
-    correctionClavier(){
+    correctionClavier(mot){
     /** 
     *  @brief : methode qui permet de comparer un mot saisie au clavier et permet d'en ressortir un mot corrige avec un nombre d'erreur < 2
-    *  @param : aucun
-    *  @return : motCorriger 
+    *  @param : mot : string 
+    *  @return : motPertinant 
     */
-        let mot = this.getNom(); //recupere du mot saisie
-        var compteur = 0; //compteur de faute
-        let motCorriger = ""; //mot corriger
 
+        var compteur = 0; //compteur de faute
+        let motPertinant = ""; //mot corriger
+
+        //on parcours le mot saisie
         for(let i = 0; i< mot.length; i++){ //parcours le mot saisie
             indiceX = this.recupererCoordonnesLettre(mot[i][0]); //recupere la coordonnee X de la lettre dans la matrice clavier
             indiceY = this.recupererCoordonnesLettre(mot[i][1]); //recupere la coordonne Y de la lettre dans la matrice clavier
@@ -138,45 +159,75 @@ class Voisin extends Donnee {
                                 case matrice[j+1][k]:
                                     compteur++;
                                     break;
-
                                 case matrice[j][k+1]:
                                     compteur++;
-                                    motCorriger[i] = matrice[j][k+1];
+                                    motPertinant[i] = matrice[j][k+1];
                                     break;
                                 case matrice[j+1][k+1]:
                                     compteur++;
-                                    motCorriger[i] = matrice[j+1][k+1];
+                                    motPertinant[i] = matrice[j+1][k+1];
                                     break;
                                 case matrice[j-1][k]:
                                     compteur++;
-                                    motCorriger[i] = matrice[j-1][k];
+                                    motPertinant[i] = matrice[j-1][k];
                                     break;
                                 case matrice[j][k-1]:
                                     compteur++;
-                                    motCorriger[i] = matrice[j][k-1];
+                                    motPertinant[i] = matrice[j][k-1];
                                     break;
                                 case matrice[j-1][k-1]:
                                     compteur++;
-                                    motCorriger[i] = matrice[j-1][k-1];
+                                    motPertinant[i] = matrice[j-1][k-1];
                                     break;
                                 case matrice[j+1][k-1]:
                                     compteur++;
-                                    motCorriger[i] = matrice[j+1][k-1];
+                                    motPertinant[i] = matrice[j+1][k-1];
                                     break;
                                 case matrice[j-1][k+1]:
                                     compteur++;
-                                    motCorriger[i] = matrice[j-1][k+1];
-                                    break;
-                                default:
+                                    motPertinant[i] = matrice[j-1][k+1];
                                     break;
                             }
                         }
                     }   
                 }
                 else{
-                    motCorriger[i] = mot[i];
+                    motPertinant[i] = mot[i];
                 }
-            return motCorriger; // retourne le nombre d'erreurs entre le mot saisie et la matrice clavier
+
+                //si le compteur est superieur ou egal a 2 on sort de la boucle
+                if(compteur >= 2){
+                    break;
+                }
+            }
+        //on regarde si la taille de motPertinant et mot sont les mêmes sinon on ajoute à motPertinant la fin de mot
+        if(motPertinant.length != mot.length){
+            for(let i = motPertinant.length; i < mot.length; i++){
+                motPertinant[i] = mot[i];
+            }
         }
+
+        return motPertinant; // retourne le mot corriger avec un nombre d'erreur < 2
     }
+
+
+    verifierCoherence(mot, motPertinant, tableau){
+    /**
+     * 
+     * @param {+} mot 
+     * @param {*} motPertinant 
+     * @param {*} tableau 
+     * @return motLePlusPertinant qui contient le mot le plus pertinant par rapport au mot saisie. Ce mot a été filtré par rapport à la saisie clavier et damaraulevenshtein
+     */
+
+        let motLePlusPertinant;
+        if(tableau.includes(motPertinant)){
+            motLePlusPertinant = motPertinant;
+        }
+        else{
+            this.damarauLevenshteinDistance(mot, motPertinant);
+        }
+        return motLePlusPertinant;
+    }
+
 }
