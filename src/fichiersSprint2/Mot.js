@@ -36,9 +36,10 @@ export class Mot{
     {
          console.log(unMot.lenght()); 
     }
-
+    
     setMot(uneTaille, uneDescription){
         setTaille(uneTaille);
-        this.setDescription(uneDescription);
+        setDescription(uneDescription);
     }
+
 }

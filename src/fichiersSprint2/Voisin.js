@@ -17,6 +17,7 @@ import { matrice } from "./donnee";
 
 class Voisin extends Donnee {
 
+    unMot = new Mot();
     ArrayDonnee = new Array(); //tableau de mot
     listeMotAvecDamerauLevenshteinsteMot = new Array(); //tableau de mot avec distance de Damerau-Levenshtein < 2
 
