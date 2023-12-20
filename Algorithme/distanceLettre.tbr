@@ -1,0 +1,259 @@
+<?xml version="1.1"?>
+<!DOCTYPE Tabula_Rasa>
+<Algorithme>
+  <nom>distanceLettre</nom>
+  <date_creation>17/11/2023 14:45</date_creation>
+  <Elements>
+    <Action>
+      <Position>698;71</Position>
+      <StyleLien>2</StyleLien>
+      <PreAssertion>matriceAzerty[NB_LIGNE][NB_COLONNE], mot, 
+listeEnsembleMotsExistant</PreAssertion>
+      <PostAssertion>listeDistance</PostAssertion>
+      <Titre>comparerMot</Titre>
+      <DetailsVisible>1</DetailsVisible>
+      <DetailsVideVisible>1</DetailsVideVisible>
+      <Enfants>
+        <Iteration>
+          <Position>921.5;139.5</Position>
+          <StyleLien>1</StyleLien>
+          <Titre>pour i allant de 0 à 
+listeEnsembleMotsExistant.size()</Titre>
+          <IterationFixe>1</IterationFixe>
+          <Enfants>
+            <Action>
+              <Position>262;281</Position>
+              <StyleLien>2</StyleLien>
+              <PreAssertion>?</PreAssertion>
+              <PostAssertion>compteur, motComparer</PostAssertion>
+              <Titre>initialisation</Titre>
+              <DetailsVisible>1</DetailsVisible>
+              <DetailsVideVisible>0</DetailsVideVisible>
+              <Enfants>
+                <Action>
+                  <Position>209;365</Position>
+                  <StyleLien>1</StyleLien>
+                  <PreAssertion>?</PreAssertion>
+                  <PostAssertion>?</PostAssertion>
+                  <Titre>motCOmparer = listeEnsembleMotsExistant[i]</Titre>
+                  <DetailsVisible>1</DetailsVisible>
+                  <DetailsVideVisible>0</DetailsVideVisible>
+                  <Enfants/>
+                </Action>
+              </Enfants>
+            </Action>
+            <Action>
+              <Position>617;281</Position>
+              <StyleLien>2</StyleLien>
+              <PreAssertion>compteur, 
+matriceAzerty[NB_LIGNE][NB_COLONNE],
+ mot, montComparer</PreAssertion>
+              <PostAssertion>listeDistance, compteur</PostAssertion>
+              <Titre>distance entre le mot et la listeEnsembleMotsExistant</Titre>
+              <DetailsVisible>1</DetailsVisible>
+              <DetailsVideVisible>1</DetailsVideVisible>
+              <Enfants>
+                <Iteration>
+                  <Position>890.5;377.5</Position>
+                  <StyleLien>1</StyleLien>
+                  <Titre>pour tailleMot allant de 0 à mot.size()</Titre>
+                  <IterationFixe>1</IterationFixe>
+                  <Enfants>
+                    <Action>
+                      <Position>619;480</Position>
+                      <StyleLien>1</StyleLien>
+                      <PreAssertion>compteur, 
+matriceAzerty[NB_LIGNE][NB_COLONNE],
+ mot, montComparer</PreAssertion>
+                      <PostAssertion>compteur</PostAssertion>
+                      <Titre>rechercher si les lettres sont les mêmes</Titre>
+                      <DetailsVisible>1</DetailsVisible>
+                      <DetailsVideVisible>1</DetailsVideVisible>
+                      <Enfants/>
+                    </Action>
+                  </Enfants>
+                </Iteration>
+              </Enfants>
+            </Action>
+            <Action>
+              <Position>1321;283</Position>
+              <StyleLien>2</StyleLien>
+              <PreAssertion>compteur</PreAssertion>
+              <PostAssertion>listeDistance</PostAssertion>
+              <Titre>ajout de la distance dans une nouvelle liste à l'indice du mot dans la liste des mots</Titre>
+              <DetailsVisible>1</DetailsVisible>
+              <DetailsVideVisible>1</DetailsVideVisible>
+              <Enfants>
+                <Action>
+                  <Position>1309;379</Position>
+                  <StyleLien>1</StyleLien>
+                  <PreAssertion>?</PreAssertion>
+                  <PostAssertion>?</PostAssertion>
+                  <Titre>listeDistance[i] = compteur</Titre>
+                  <DetailsVisible>1</DetailsVisible>
+                  <DetailsVideVisible>0</DetailsVideVisible>
+                  <Enfants/>
+                </Action>
+                <Sortie>
+                  <Position>1693;396</Position>
+                </Sortie>
+              </Enfants>
+            </Action>
+          </Enfants>
+        </Iteration>
+      </Enfants>
+    </Action>
+    <Action>
+      <Position>511;677</Position>
+      <StyleLien>2</StyleLien>
+      <PreAssertion>compteur, 
+matriceAzerty[NB_LIGNE][NB_COLONNE],
+ mot, montComparer</PreAssertion>
+      <PostAssertion>compteur</PostAssertion>
+      <Titre>rechercher si les lettres sont les mêmes</Titre>
+      <DetailsVisible>1</DetailsVisible>
+      <DetailsVideVisible>1</DetailsVideVisible>
+      <Enfants>
+        <Condition>
+          <Position>710.5;775</Position>
+          <StyleLien>1</StyleLien>
+          <estUnique>1</estUnique>
+          <operationsLogiques>
+            <operation>
+              <Titre>mot[tailleMot] != 
+motComparer[tailleMot]</Titre>
+              <Enfants>
+                <Action>
+                  <Position>900;877</Position>
+                  <StyleLien>2</StyleLien>
+                  <PreAssertion>?</PreAssertion>
+                  <PostAssertion>?</PostAssertion>
+                  <Titre>rechercher ecart dans la matriceAzerty</Titre>
+                  <DetailsVisible>1</DetailsVisible>
+                  <DetailsVideVisible>0</DetailsVideVisible>
+                  <Enfants>
+                    <Iteration>
+                      <Position>1381.5;973.5</Position>
+                      <StyleLien>1</StyleLien>
+                      <Titre>pour j allant de 0 à NB_LIGNE</Titre>
+                      <IterationFixe>1</IterationFixe>
+                      <Enfants>
+                        <Iteration>
+                          <Position>1380.5;1055.5</Position>
+                          <StyleLien>1</StyleLien>
+                          <Titre>pour k allant de 0 à NB_COLONNE</Titre>
+                          <IterationFixe>1</IterationFixe>
+                          <Enfants>
+                            <Condition>
+                              <Position>1305.5;1157</Position>
+                              <StyleLien>1</StyleLien>
+                              <estUnique>1</estUnique>
+                              <operationsLogiques>
+                                <operation>
+                                  <Titre>motComparer[j][k] = matriceAzerty[j][k]</Titre>
+                                  <Enfants>
+                                    <Action>
+                                      <Position>1113;1233</Position>
+                                      <StyleLien>2</StyleLien>
+                                      <PreAssertion>mot, motComparer,
+indiceX, indiceY, 
+j,k</PreAssertion>
+                                      <PostAssertion>?</PostAssertion>
+                                      <Titre>faire la distance entre les deux lettres et l ajouter au compteur</Titre>
+                                      <DetailsVisible>1</DetailsVisible>
+                                      <DetailsVideVisible>0</DetailsVideVisible>
+                                      <Enfants>
+                                        <Action>
+                                          <Position>1322;1307</Position>
+                                          <StyleLien>1</StyleLien>
+                                          <PreAssertion>?</PreAssertion>
+                                          <PostAssertion>?</PostAssertion>
+                                          <Titre>compteur += 
+abs(indiceX - j) + 
+abs(indiceY - k)</Titre>
+                                          <DetailsVisible>1</DetailsVisible>
+                                          <DetailsVideVisible>0</DetailsVideVisible>
+                                          <Enfants/>
+                                        </Action>
+                                      </Enfants>
+                                    </Action>
+                                  </Enfants>
+                                </operation>
+                                <operation>
+                                  <Titre>Sinon</Titre>
+                                  <Enfants/>
+                                </operation>
+                              </operationsLogiques>
+                            </Condition>
+                          </Enfants>
+                        </Iteration>
+                      </Enfants>
+                    </Iteration>
+                    <Action>
+                      <Position>754;996</Position>
+                      <StyleLien>2</StyleLien>
+                      <PreAssertion>?</PreAssertion>
+                      <PostAssertion>indiceX, indiceY</PostAssertion>
+                      <Titre>recherche mot[tailleMot] dans la matrice</Titre>
+                      <DetailsVisible>1</DetailsVisible>
+                      <DetailsVideVisible>0</DetailsVideVisible>
+                      <Enfants>
+                        <Iteration>
+                          <Position>841.5;1070.5</Position>
+                          <StyleLien>1</StyleLien>
+                          <Titre>pour j allant de 0 à NB_LIGNE</Titre>
+                          <IterationFixe>1</IterationFixe>
+                          <Enfants>
+                            <Iteration>
+                              <Position>840.5;1152.5</Position>
+                              <StyleLien>1</StyleLien>
+                              <Titre>pour k allant de 0 à NB_COLONNE</Titre>
+                              <IterationFixe>1</IterationFixe>
+                              <Enfants>
+                                <Condition>
+                                  <Position>765.5;1262</Position>
+                                  <StyleLien>1</StyleLien>
+                                  <estUnique>1</estUnique>
+                                  <operationsLogiques>
+                                    <operation>
+                                      <Titre>mot[tailleMot] = matriceAzerty[j][k]</Titre>
+                                      <Enfants>
+                                        <Action>
+                                          <Position>806;1342</Position>
+                                          <StyleLien>1</StyleLien>
+                                          <PreAssertion>?</PreAssertion>
+                                          <PostAssertion>?</PostAssertion>
+                                          <Titre>indiceX = j
+indiceY = k</Titre>
+                                          <DetailsVisible>0</DetailsVisible>
+                                          <DetailsVideVisible>1</DetailsVideVisible>
+                                          <Enfants/>
+                                        </Action>
+                                      </Enfants>
+                                    </operation>
+                                    <operation>
+                                      <Titre>Sinon</Titre>
+                                      <Enfants/>
+                                    </operation>
+                                  </operationsLogiques>
+                                </Condition>
+                              </Enfants>
+                            </Iteration>
+                          </Enfants>
+                        </Iteration>
+                      </Enfants>
+                    </Action>
+                  </Enfants>
+                </Action>
+              </Enfants>
+            </operation>
+            <operation>
+              <Titre>Sinon</Titre>
+              <Enfants/>
+            </operation>
+          </operationsLogiques>
+        </Condition>
+      </Enfants>
+    </Action>
+  </Elements>
+</Algorithme>

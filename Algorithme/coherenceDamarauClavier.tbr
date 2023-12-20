@@ -2,7 +2,7 @@
 <!DOCTYPE Tabula_Rasa>
 <Algorithme>
   <nom>coherenceDamarauClavier</nom>
-  <date_creation>18/12/2023 17:42</date_creation>
+  <date_creation>20/12/2023 11:17</date_creation>
   <Elements>
     <Action>
       <Position>511;66</Position>
@@ -105,10 +105,10 @@ listeMotAvecDamerauLevenshtein</PreAssertion>
           <estUnique>1</estUnique>
           <operationsLogiques>
             <operation>
-              <Titre>esPertinant == false</Titre>
+              <Titre>estPertinant == false</Titre>
               <Enfants>
                 <Action>
-                  <Position>890;288</Position>
+                  <Position>868;284</Position>
                   <StyleLien>2</StyleLien>
                   <PreAssertion>listePertinante</PreAssertion>
                   <PostAssertion>motPertinant</PostAssertion>
@@ -117,21 +117,21 @@ listeMotAvecDamerauLevenshtein</PreAssertion>
                   <DetailsVideVisible>1</DetailsVideVisible>
                   <Enfants>
                     <Iteration>
-                      <Position>1054.5;365.5</Position>
+                      <Position>1032.5;360.5</Position>
                       <StyleLien>1</StyleLien>
                       <Titre>pour i allant de 0 à listePertinante</Titre>
                       <IterationFixe>1</IterationFixe>
                       <Enfants>
                         <Condition>
-                          <Position>964.5;502</Position>
-                          <StyleLien>1</StyleLien>
+                          <Position>923.5;456</Position>
+                          <StyleLien>0</StyleLien>
                           <estUnique>0</estUnique>
                           <operationsLogiques>
                             <operation>
                               <Titre>listePertinante[i] = 0</Titre>
                               <Enfants>
                                 <Action>
-                                  <Position>814;633</Position>
+                                  <Position>812;584</Position>
                                   <StyleLien>1</StyleLien>
                                   <PreAssertion>?</PreAssertion>
                                   <PostAssertion>?</PostAssertion>
@@ -141,13 +141,117 @@ listeMotAvecDamerauLevenshtein</PreAssertion>
                                   <Enfants/>
                                 </Action>
                                 <Sortie>
-                                  <Position>1059;647</Position>
+                                  <Position>1060;594</Position>
                                 </Sortie>
                               </Enfants>
                             </operation>
                             <operation>
                               <Titre>Sinon</Titre>
-                              <Enfants/>
+                              <Enfants>
+                                <Condition>
+                                  <Position>1152.5;564</Position>
+                                  <StyleLien>0</StyleLien>
+                                  <estUnique>0</estUnique>
+                                  <operationsLogiques>
+                                    <operation>
+                                      <Titre>listeMotAvecDamerauLevenshtein[i] = 1</Titre>
+                                      <Enfants>
+                                        <Action>
+                                          <Position>1013;745</Position>
+                                          <StyleLien>1</StyleLien>
+                                          <PreAssertion>?</PreAssertion>
+                                          <PostAssertion>?</PostAssertion>
+                                          <Titre>motPertinant = listeMotAvecDamerauLevenshtein[i]</Titre>
+                                          <DetailsVisible>1</DetailsVisible>
+                                          <DetailsVideVisible>0</DetailsVideVisible>
+                                          <Enfants/>
+                                        </Action>
+                                        <Sortie>
+                                          <Position>1295;720</Position>
+                                        </Sortie>
+                                        <Action>
+                                          <Position>1136;828</Position>
+                                          <StyleLien>1</StyleLien>
+                                          <PreAssertion>?</PreAssertion>
+                                          <PostAssertion>?</PostAssertion>
+                                          <Titre>afficher "  avec une erreur de 1"</Titre>
+                                          <DetailsVisible>1</DetailsVisible>
+                                          <DetailsVideVisible>0</DetailsVideVisible>
+                                          <Enfants/>
+                                        </Action>
+                                      </Enfants>
+                                    </operation>
+                                    <operation>
+                                      <Titre>Sinon</Titre>
+                                      <Enfants>
+                                        <Condition>
+                                          <Position>1458.5;648</Position>
+                                          <StyleLien>1</StyleLien>
+                                          <estUnique>0</estUnique>
+                                          <operationsLogiques>
+                                            <operation>
+                                              <Titre>listeMotAvecDamerauLevenshtein[i] = 2</Titre>
+                                              <Enfants>
+                                                <Action>
+                                                  <Position>1354;766</Position>
+                                                  <StyleLien>1</StyleLien>
+                                                  <PreAssertion>?</PreAssertion>
+                                                  <PostAssertion>?</PostAssertion>
+                                                  <Titre>motPertinant = listeMotAvecDamerauLevenshtein[i]</Titre>
+                                                  <DetailsVisible>1</DetailsVisible>
+                                                  <DetailsVideVisible>0</DetailsVideVisible>
+                                                  <Enfants/>
+                                                </Action>
+                                                <Sortie>
+                                                  <Position>1614;864</Position>
+                                                </Sortie>
+                                                <Action>
+                                                  <Position>1464;956</Position>
+                                                  <StyleLien>1</StyleLien>
+                                                  <PreAssertion>?</PreAssertion>
+                                                  <PostAssertion>?</PostAssertion>
+                                                  <Titre>afficher "  avec une erreur de 2"</Titre>
+                                                  <DetailsVisible>1</DetailsVisible>
+                                                  <DetailsVideVisible>0</DetailsVideVisible>
+                                                  <Enfants/>
+                                                </Action>
+                                              </Enfants>
+                                            </operation>
+                                            <operation>
+                                              <Titre>Sinon</Titre>
+                                              <Enfants>
+                                                <Action>
+                                                  <Position>1737;843</Position>
+                                                  <StyleLien>1</StyleLien>
+                                                  <PreAssertion>?</PreAssertion>
+                                                  <PostAssertion>?</PostAssertion>
+                                                  <Titre>afficher "aucun mot ne correspond à votre recherche"</Titre>
+                                                  <DetailsVisible>1</DetailsVisible>
+                                                  <DetailsVideVisible>0</DetailsVideVisible>
+                                                  <Enfants/>
+                                                </Action>
+                                                <Action>
+                                                  <Position>1666;763</Position>
+                                                  <StyleLien>1</StyleLien>
+                                                  <PreAssertion>?</PreAssertion>
+                                                  <PostAssertion>?</PostAssertion>
+                                                  <Titre>motPertinant = null</Titre>
+                                                  <DetailsVisible>1</DetailsVisible>
+                                                  <DetailsVideVisible>0</DetailsVideVisible>
+                                                  <Enfants/>
+                                                </Action>
+                                                <Sortie>
+                                                  <Position>1915;768</Position>
+                                                </Sortie>
+                                              </Enfants>
+                                            </operation>
+                                          </operationsLogiques>
+                                        </Condition>
+                                      </Enfants>
+                                    </operation>
+                                  </operationsLogiques>
+                                </Condition>
+                              </Enfants>
                             </operation>
                           </operationsLogiques>
                         </Condition>

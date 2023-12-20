@@ -2,12 +2,12 @@
 <!DOCTYPE Tabula_Rasa>
 <Algorithme>
   <nom>algoGeneral</nom>
-  <date_creation>19/12/2023 14:03</date_creation>
+  <date_creation>19/12/2023 14:40</date_creation>
   <Elements>
     <Action>
       <Position>654;44</Position>
       <StyleLien>2</StyleLien>
-      <PreAssertion>mot</PreAssertion>
+      <PreAssertion>mot, matrice, dictionnaireJSON</PreAssertion>
       <PostAssertion>motCorrige</PostAssertion>
       <Titre>Algorithme général de correction de mots</Titre>
       <DetailsVisible>1</DetailsVisible>
@@ -26,9 +26,9 @@ ensembleMots</PostAssertion>
           <Enfants/>
         </Action>
         <Action>
-          <Position>298;202</Position>
+          <Position>193;252</Position>
           <StyleLien>1</StyleLien>
-          <PreAssertion>mot</PreAssertion>
+          <PreAssertion>mot, dictionnaireJSON</PreAssertion>
           <PostAssertion>listeMotAvecDamerauLevenshtein</PostAssertion>
           <Titre>Obtenir l'ensemble des &#xd;
 mots ayant une distance&#xd;
@@ -60,19 +60,19 @@ la longueur de mot / 4 + 1</Titre>
           </Enfants>
         </Action>
         <Action>
-          <Position>617;338</Position>
+          <Position>505;336</Position>
           <StyleLien>2</StyleLien>
-          <PreAssertion>mot</PreAssertion>
-          <PostAssertion>motLePlusPertinant</PostAssertion>
+          <PreAssertion>mot, matrice, dictionnaireJSON</PreAssertion>
+          <PostAssertion>listePertinante</PostAssertion>
           <Titre>obtenir le mot le plus probable par rapport à la saisie clavier avec au plus 2 erreurs</Titre>
           <DetailsVisible>1</DetailsVisible>
           <DetailsVideVisible>1</DetailsVideVisible>
           <Enfants>
             <Procedure>
-              <Position>591;422</Position>
+              <Position>535;428</Position>
               <StyleLien>1</StyleLien>
-              <PreAssertion>mot, matrice</PreAssertion>
-              <PostAssertion>motPertinant</PostAssertion>
+              <PreAssertion>mot, matrice, dictionnaireJSON</PreAssertion>
+              <PostAssertion>listePertinante</PostAssertion>
               <Titre>corrigerClavier</Titre>
               <DetailsVisible>1</DetailsVisible>
               <DetailsVideVisible>1</DetailsVideVisible>
@@ -156,9 +156,9 @@ motCorrige = mot</Titre>
         <Action>
           <Position>841;196</Position>
           <StyleLien>1</StyleLien>
-          <PreAssertion>motPertinant,
+          <PreAssertion>listePertinante,
 listeMotAvecDamerauLevenshtein</PreAssertion>
-          <PostAssertion>motLePlusPertinents</PostAssertion>
+          <PostAssertion>motLesPlusPertinants</PostAssertion>
           <Titre>Verifier cohérence entre damarau-levenshtein et saisie clavier</Titre>
           <DetailsVisible>1</DetailsVisible>
           <DetailsVideVisible>1</DetailsVideVisible>
