@@ -56,8 +56,5 @@ class Vinyle extends Donnee{
         " mon genre musicale est : " + this.getGenre() + " et je suis sorti en : " + this.getAnnee());
     }
 
-    setMot(uneTaille, uneDescription){
-        setTaille(uneTaille);
-        setDescription(uneDescription);
-    }
+
 }

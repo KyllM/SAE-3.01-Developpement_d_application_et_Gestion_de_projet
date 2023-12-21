@@ -12,8 +12,7 @@
 
 export class Mot{
     constructor(taille, description){
-        setTaille(taille);
-        setDescription(description);
+        setMot(taille, description);
     };
 
     getTaille(){
@@ -36,7 +35,7 @@ export class Mot{
     {
          console.log(unMot.lenght()); 
     }
-    
+
     setMot(uneTaille, uneDescription){
         setTaille(uneTaille);
         setDescription(uneDescription);

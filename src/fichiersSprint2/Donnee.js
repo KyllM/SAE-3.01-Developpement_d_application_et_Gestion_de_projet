@@ -13,31 +13,31 @@ matrice = [
     ['q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'ù'],
     ['w', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '!', '!']
   ]
+export const cheminFichierJSON = "./donnees.json";
 
-  /**
-   * @brief récupération des données du fichier JSON
-   * @param aucun 
-   * @return tableauJSON (tableau de données contenant les id du fichier json)
-  */
+fetch(cheminFichierJSON)
+.then(response => {
+    if(!response.ok){
+        throw new Error("HTTP error " + response.status);
+    }
+    return response.json();
+})
 
-export function recuperationDonneesJSON(){
-    let tableauJSON = new Array();
+.then(donnesJSON => {
+    console.log(donnesJSON);
+})
 
-    //récupération des données du fichier JSON
-    fetch('donnees.json')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Erreur HTTP : " + response.status);
-        }
-        return response.json();
-    })
-    .then(data => {
-        for(let i = 0; i < data.length; i++){
-            tableauJSON.push(data[i]);
-        }
-    });
-    return tableauJSON;
-}
+then(data => {
+    // Les données JSON sont disponibles ici
+    console.log("Données JSON récupérées avec succès :", data);
+
+    // Vous pouvez maintenant travailler avec les données comme vous le souhaitez
+    // Par exemple, accéder à une propriété spécifique :
+    console.log("Valeur de la propriété 'exemple' :", data.exemple);
+  })
+  .catch(error => {
+    console.error("Erreur lors de la récupération du fichier JSON :", error);
+});
 
 //------------------------------------
 //      Classe Donnee
