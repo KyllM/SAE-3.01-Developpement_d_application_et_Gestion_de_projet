@@ -23,7 +23,10 @@ function main(){
     console.log("---------------------------------------------");
 
     //declaration des variables
-    let uneDonnee = new Donnee();
-    let unMot = new Mot();
-    let unVinyle = new Vinyle();
+    var mot =  getElementById("mot");
+    mot = new Voisin(mot);
+
+    mot.damaraulevenshteinDistance();
+    mot.explorerCombinaison();
+    
 }
