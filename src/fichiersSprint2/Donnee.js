@@ -6,39 +6,51 @@
  */
 
 
-export const  matrice = new Array();
-matrice = [
+var matrice = new Array();
+var matrice = [
     ['&', 'é', '"', "'", '(', '-', 'è', '_', 'ç', 'à', ')'],
     ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '^'],
     ['q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'ù'],
     ['w', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '!', '!']
   ]
-export const cheminFichierJSON = "./donnees.json";
 
-fetch(cheminFichierJSON)
-.then(response => {
-    if(!response.ok){
-        throw new Error("HTTP error " + response.status);
-    }
-    return response.json();
-})
+export function recuperationJSON(){
+    /**
+     * @param {string} cheminFichierJSON - chemin du fichier JSON
+     * @return {dictionnaire} - dictionnaire contenant les données du fichier JSON
+     * @brief récupère les données du fichier JSON et les stocke dans un dictionnaire
+     * @version 1.0
+     * @date 2021-05-18
+     */
 
-.then(donnesJSON => {
-    console.log(donnesJSON);
-})
+    let cheminFichierJSON = "./donnees.json";
 
-then(data => {
-    // Les données JSON sont disponibles ici
-    console.log("Données JSON récupérées avec succès :", data);
+    // Retourner une promesse
+    return fetch(cheminFichierJSON)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+        })
+        .then(donneesJSON => {
+            // Créer un dictionnaire à partir des données JSON
+            var dictionnaire = {};
+            for (var item of donneesJSON) {
+                dictionnaire[item.cle] = item.valeur;
+            }
 
-    // Vous pouvez maintenant travailler avec les données comme vous le souhaitez
-    // Par exemple, accéder à une propriété spécifique :
-    console.log("Valeur de la propriété 'exemple' :", data.exemple);
-  })
-  .catch(error => {
-    console.error("Erreur lors de la récupération du fichier JSON :", error);
-});
+            // Afficher le dictionnaire
+            console.log("Dictionnaire JSON :", dictionnaire);
 
+            // Renvoyer le dictionnaire
+            return dictionnaire;
+        })
+        .catch(error => {
+            console.error("Erreur lors de la récupération du fichier JSON :", error);
+            throw error; // Propager l'erreur pour que le traitement puisse être effectué par l'appelant si nécessaire
+        });
+}
 //------------------------------------
 //      Classe Donnee
 //------------------------------------

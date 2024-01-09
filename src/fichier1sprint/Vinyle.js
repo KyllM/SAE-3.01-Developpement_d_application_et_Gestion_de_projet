@@ -55,4 +55,6 @@ class Vinyle extends Donnee{
         console.log('Je suis le vinyle ' + this.getTitre() + " créé par " + this.getArtiste() + 
         " mon genre musicale est : " + this.getGenre() + " et je suis sorti en : " + this.getAnnee());
     }
+
+
 }

@@ -6,27 +6,35 @@
  * @author MaxMontouro 
  */
 
-    //import {Donnee} from "./Donnee.js"; ici Donnee.js est deja inclu
-    import {Mot} from "./Mot.js";
-    import {Vinyle} from "./Vinyle.js";
-    import {Voisin} from "./Voisin.js";
-
-
+//INCLUSION DES FICHIERS JS
+import { recuperationJSON } from "./Donnee.js";
+//import {Mot} from "./Mot.js";
+//import {Vinyle} from "./Vinyle.js";
 
 //------------------------------------
 //              Main
 //------------------------------------
 
-function main(){
+async function main() {
     console.log("Bienvenue dans le projet Vinylog");
     console.log("---------------------------------------------------");
     console.log("---------------------------------------------");
 
-    //declaration des variables
-    var mot =  getElementById("mot");
-    mot = new Voisin(mot);
+    try {
+        let dictionnaireJSON = await recuperationJSON();
+        console.log(dictionnaireJSON);
 
-    mot.damaraulevenshteinDistance();
-    mot.explorerCombinaison();
-    
+        // Continuez avec le reste de votre code ici
+        /*
+        var mot = getElementById("mot");
+        mot = new Voisin(mot);
+
+        mot.damaraulevenshteinDistance();
+        mot.explorerCombinaison();
+        */
+    } catch (error) {
+        console.error("Une erreur s'est produite dans le main :", error);
+    }
 }
+
+main();
