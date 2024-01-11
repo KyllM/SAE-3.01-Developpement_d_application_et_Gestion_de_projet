@@ -2,7 +2,7 @@
 <!DOCTYPE Tabula_Rasa>
 <Algorithme>
   <nom>coherenceDamarauClavier</nom>
-  <date_creation>20/12/2023 11:17</date_creation>
+  <date_creation>20/12/2023 11:35</date_creation>
   <Elements>
     <Action>
       <Position>511;66</Position>

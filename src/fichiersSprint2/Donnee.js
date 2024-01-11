@@ -5,7 +5,9 @@
  * @date 2021-05-18
  */
 
+import { dictionnaireJSON } from "./main.js";
 
+//declaration de la matrice clavier
 var matrice = new Array();
 var matrice = [
     ['&', 'é', '"', "'", '(', '-', 'è', '_', 'ç', 'à', ')'],
@@ -13,6 +15,8 @@ var matrice = [
     ['q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'ù'],
     ['w', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '!', '!']
   ]
+
+export {matrice};
 
 //------------------------------------
 //      Classe Donnee
@@ -29,7 +33,7 @@ export class Donnee{
         throw new Error("La méthode 'damarauLevenshtein' doit être implémenté");
     };
 
-    explorerCombinaison(){
-        throw new Error("La méthode 'explorerCombinaison' doit être implémenté"); 
+    corrigerClavier(){
+        throw new Error("La méthode 'corrigerClavier' doit être implémenté"); 
     };
 }

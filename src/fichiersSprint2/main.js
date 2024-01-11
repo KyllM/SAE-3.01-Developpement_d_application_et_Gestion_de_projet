@@ -7,10 +7,11 @@
  */
 
 //INCLUSION DES FICHIERS JS
-//import {Mot} from "./Mot.js";
-//import {Vinyle} from "./Vinyle.js";
+import {Mot} from "./Mot.js";
+import {Vinyle} from "./Vinyle.js";
+import { Donnee } from "./Donnee.js";
 
-
+//fonction pour récupérer les données du fichier JSON (GLOBAL)
 function recuperationJSON(cheminFichierJSON){
     /**
      * @param {string} cheminFichierJSON - chemin du fichier JSON
@@ -58,6 +59,10 @@ function recuperationJSON(cheminFichierJSON){
             throw error; // Propager l'erreur pour que le traitement puisse être effectué par l'appelant si nécessaire
         });
 }
+let cheminFichierJSON = "./fichiersSprint2/donnees.json";
+let dictionnaireJSON = await recuperationJSON(cheminFichierJSON);
+export {dictionnaireJSON};
+
 //------------------------------------
 //              Main
 //------------------------------------
@@ -68,18 +73,15 @@ async function main() {
     console.log("---------------------------------------------");
 
     try {
-        let cheminFichierJSON = "./fichiersSprint2/donnees.json";
-        let dictionnaireJSON = await recuperationJSON(cheminFichierJSON);
         console.log(dictionnaireJSON);
 
-        // Continuez avec le reste de votre code ici
-        /*
-        var mot = getElementById("mot");
-        mot = new Voisin(mot);
+        var mot = document.getElementById("demonstration");
+        mot = new Mot(mot);
 
         mot.damaraulevenshteinDistance();
         mot.explorerCombinaison();
-        */
+        mot.afficherCombinaison();
+
     } catch (error) {
         console.error("Une erreur s'est produite dans le main :", error);
     }

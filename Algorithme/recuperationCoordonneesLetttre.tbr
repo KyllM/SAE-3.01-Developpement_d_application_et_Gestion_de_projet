@@ -1,0 +1,62 @@
+<?xml version="1.1"?>
+<!DOCTYPE Tabula_Rasa>
+<Algorithme>
+  <nom>recuperationCoordonneesLetttre</nom>
+  <date_creation>19/12/2023 14:22</date_creation>
+  <Elements>
+    <Action>
+      <Position>591;89</Position>
+      <StyleLien>2</StyleLien>
+      <PreAssertion>lettre, matrice</PreAssertion>
+      <PostAssertion>[indiceX, indiceY]</PostAssertion>
+      <Titre>recuperationCoordonneesLettre
+</Titre>
+      <DetailsVisible>1</DetailsVisible>
+      <DetailsVideVisible>1</DetailsVideVisible>
+      <Enfants>
+        <Iteration>
+          <Position>820.5;173.5</Position>
+          <StyleLien>1</StyleLien>
+          <Titre>pour i allant de 0 à matrice.length</Titre>
+          <IterationFixe>1</IterationFixe>
+          <Enfants>
+            <Iteration>
+              <Position>819.5;273.5</Position>
+              <StyleLien>1</StyleLien>
+              <Titre>pour j allant de 0 à matrice.length</Titre>
+              <IterationFixe>1</IterationFixe>
+              <Enfants>
+                <Condition>
+                  <Position>743.5;366</Position>
+                  <StyleLien>1</StyleLien>
+                  <estUnique>1</estUnique>
+                  <operationsLogiques>
+                    <operation>
+                      <Titre>matrice[i][j] == lettre</Titre>
+                      <Enfants>
+                        <Action>
+                          <Position>712;464</Position>
+                          <StyleLien>1</StyleLien>
+                          <PreAssertion>?</PreAssertion>
+                          <PostAssertion>?</PostAssertion>
+                          <Titre>return [indiceX, indiceY]</Titre>
+                          <DetailsVisible>1</DetailsVisible>
+                          <DetailsVideVisible>0</DetailsVideVisible>
+                          <Enfants/>
+                        </Action>
+                      </Enfants>
+                    </operation>
+                    <operation>
+                      <Titre>Sinon</Titre>
+                      <Enfants/>
+                    </operation>
+                  </operationsLogiques>
+                </Condition>
+              </Enfants>
+            </Iteration>
+          </Enfants>
+        </Iteration>
+      </Enfants>
+    </Action>
+  </Elements>
+</Algorithme>

@@ -9,13 +9,14 @@
 //INCLUSION DES FICHIERS JS
 import {Donnee} from "./Donnee.js";
 import {matrice} from "./Donnee.js";
-import {dictionnaireJSON} from "./Donnee.js";
+import { dictionnaireJSON } from "./main.js";
+
 
 //------------------------------------
 //      Classe Mot
 //------------------------------------
 
-export class Mot{
+export class Mot extends Donnee{
 
     //ATTRIBUTS
     unMot = new Mot();
@@ -109,7 +110,7 @@ export class Mot{
             }
             //console.log(tableau[longueur1][longueur2])
             return tableau[longueur1][longueur2];
-        }
+    }
     
     ajouterTableau(mot, listeMotAvecDamerauLevenshteinsteMot){
             if(this.damarauLevenshteinDistance(mot, this.getMot()) < 2){
@@ -132,9 +133,9 @@ export class Mot{
                     }
                 }
             }
-        }
+    }
     
-    correctionClavier(mot){
+    corrigerClavier(mot){
         /** 
         *  @brief : methode qui permet de comparer un mot saisie au clavier et permet d'en ressortir un mot corrige avec un nombre d'erreur < 2
         *  @param : mot : string 
@@ -143,71 +144,72 @@ export class Mot{
     
         var compteur = 0; //compteur de faute
         let motPertinant = ""; //mot corriger
-    
-        //on parcours le mot saisie
-        for(let i = 0; i< mot.length; i++){ //parcours le mot saisie
-            indiceX = this.recupererCoordonnesLettre(mot[i][0]); //recupere la coordonnee X de la lettre dans la matrice clavier
-            indiceY = this.recupererCoordonnesLettre(mot[i][1]); //recupere la coordonne Y de la lettre dans la matrice clavier
-                if(mot[i] != matrice[indiceX][indiceY]){
-                //si la lettre n'est pas la bonne la bonne dans la matrice clavier
-                    for(let j = indiceX; j< matrice.length; j++){
-                        for(let k=indiceY; k< matrice[j].length; k++){
-                            //on regarde si les coordonnees de la lettre recupere dans la matrice clavier sont les bonnes par rapport au mot saisie
-                            switch(matrice[indiceX][indiceY]){
-                                case matrice[j+1][k]:
-                                    compteur++;
-                                    break;
-                                case matrice[j][k+1]:
-                                    compteur++;
-                                    motPertinant[i] = matrice[j][k+1];
-                                    break;
-                                case matrice[j+1][k+1]:
-                                    compteur++;
-                                    motPertinant[i] = matrice[j+1][k+1];
-                                    break;
-                                case matrice[j-1][k]:
-                                    compteur++;
-                                    motPertinant[i] = matrice[j-1][k];
-                                    break;
-                                case matrice[j][k-1]:
-                                    compteur++;
-                                    motPertinant[i] = matrice[j][k-1];
-                                    break;
-                                case matrice[j-1][k-1]:
-                                    compteur++;
-                                    motPertinant[i] = matrice[j-1][k-1];
-                                    break;
-                                case matrice[j+1][k-1]:
-                                    compteur++;
-                                    motPertinant[i] = matrice[j+1][k-1];
-                                    break;
-                                case matrice[j-1][k+1]:
-                                    compteur++;
-                                    motPertinant[i] = matrice[j-1][k+1];
-                                    break;
+        let listePertinante = new Array(); //tableau de mot corriger
+
+
+        //parcours du mot
+        dictionnaireJSON.forEach(element => {
+            if(element.length == mot.length){
+                compteur = 0;
+                for(let i = 0; i < mot.length; i++){
+                    var indiceX = this.recupererCoordonnesLettre(mot[i][0]);
+                    var indiceY = this.recupererCoordonnesLettre(element[i][0]);
+                    if(mot[i] != matrice[indiceX][indiceY] && element[i] != matrice[indiceX][indiceY]){
+                        for(let j = indiceX; j< matrice.length; j++){
+                            for(let k=indiceY; k< matrice[j].length; k++){
+                                //on regarde si les coordonnees de la lettre recupere dans la matrice clavier sont les bonnes par rapport au mot saisie
+                                switch(matrice[indiceX][indiceY]){
+                                    case matrice[j+1][k]:
+                                        compteur++;
+                                        break;
+                                    case matrice[j][k+1]:
+                                        compteur++;
+                                        motPertinant[i] = matrice[j][k+1];
+                                        break;
+                                    case matrice[j+1][k+1]:
+                                        compteur++;
+                                        motPertinant[i] = matrice[j+1][k+1];
+                                        break;
+                                    case matrice[j-1][k]:
+                                        compteur++;
+                                        motPertinant[i] = matrice[j-1][k];
+                                        break;
+                                    case matrice[j][k-1]:
+                                        compteur++;
+                                        motPertinant[i] = matrice[j][k-1];
+                                        break;
+                                    case matrice[j-1][k-1]:
+                                        compteur++;
+                                        motPertinant[i] = matrice[j-1][k-1];
+                                        break;
+                                    case matrice[j+1][k-1]:
+                                        compteur++;
+                                        motPertinant[i] = matrice[j+1][k-1];
+                                        break;
+                                    case matrice[j-1][k+1]:
+                                        compteur++;
+                                        motPertinant[i] = matrice[j-1][k+1];
+                                        break;
+                                    }
                                 }
-                            }
-                        }   
-                    }
-                    else{
-                        motPertinant[i] = mot[i];
-                    }
-    
+                            }   
+                        }
+                        else{
+                            motPertinant[i] = mot[i];
+                        }
+        
                     //si le compteur est superieur ou egal a 2 on sort de la boucle
                     if(compteur >= 2){
                         break;
                     }
                 }
-            //on regarde si la taille de motPertinant et mot sont les mêmes sinon on ajoute à motPertinant la fin de mot
-            if(motPertinant.length != mot.length){
-                for(let i = motPertinant.length; i < mot.length; i++){
-                    motPertinant[i] = mot[i];
-                }
             }
-    
-            return motPertinant; // retourne le mot corriger avec un nombre d'erreur < 2
-    }
-    
+            if(compteur < 0 ){
+                listePertinante.push(motPertinant);
+            }
+            }) 
+        return listePertinante;
+    } 
     
     verifierCoherence(mot, motPertinant, tableau){
         /**

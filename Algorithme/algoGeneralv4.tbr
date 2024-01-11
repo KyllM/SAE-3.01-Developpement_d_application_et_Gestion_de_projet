@@ -2,7 +2,7 @@
 <!DOCTYPE Tabula_Rasa>
 <Algorithme>
   <nom>algoGeneral</nom>
-  <date_creation>19/12/2023 14:40</date_creation>
+  <date_creation>11/1/2024 10:32</date_creation>
   <Elements>
     <Action>
       <Position>654;44</Position>
@@ -18,7 +18,6 @@
           <StyleLien>1</StyleLien>
           <PreAssertion>?</PreAssertion>
           <PostAssertion>motCorrige, 
-distanceMax,
 ensembleMots</PostAssertion>
           <Titre>Initialisation</Titre>
           <DetailsVisible>1</DetailsVisible>
@@ -60,7 +59,7 @@ la longueur de mot / 4 + 1</Titre>
           </Enfants>
         </Action>
         <Action>
-          <Position>505;336</Position>
+          <Position>573;364</Position>
           <StyleLien>2</StyleLien>
           <PreAssertion>mot, matrice, dictionnaireJSON</PreAssertion>
           <PostAssertion>listePertinante</PostAssertion>
@@ -69,7 +68,7 @@ la longueur de mot / 4 + 1</Titre>
           <DetailsVideVisible>1</DetailsVideVisible>
           <Enfants>
             <Procedure>
-              <Position>535;428</Position>
+              <Position>606;444</Position>
               <StyleLien>1</StyleLien>
               <PreAssertion>mot, matrice, dictionnaireJSON</PreAssertion>
               <PostAssertion>listePertinante</PostAssertion>
@@ -80,81 +79,8 @@ la longueur de mot / 4 + 1</Titre>
             </Procedure>
           </Enfants>
         </Action>
-        <Condition>
-          <Position>1313.5;367</Position>
-          <StyleLien>0</StyleLien>
-          <estUnique>0</estUnique>
-          <operationsLogiques>
-            <operation>
-              <Titre>mot avec distance = 0 existe</Titre>
-              <Enfants>
-                <Action>
-                  <Position>1087;478</Position>
-                  <StyleLien>1</StyleLien>
-                  <PreAssertion>?</PreAssertion>
-                  <PostAssertion>?</PostAssertion>
-                  <Titre>Pas de modification 
-motLePlusPertinant = mot</Titre>
-                  <DetailsVisible>1</DetailsVisible>
-                  <DetailsVideVisible>0</DetailsVideVisible>
-                  <Enfants/>
-                </Action>
-                <Sortie>
-                  <Position>1328;488</Position>
-                </Sortie>
-              </Enfants>
-            </operation>
-            <operation>
-              <Titre>Sinon</Titre>
-              <Enfants>
-                <Condition>
-                  <Position>1463.5;482</Position>
-                  <StyleLien>0</StyleLien>
-                  <estUnique>0</estUnique>
-                  <operationsLogiques>
-                    <operation>
-                      <Titre>mot avec distance &lt;=&#xd;
-(mot/4+1) existe</Titre>
-                      <Enfants>
-                        <Procedure>
-                          <Position>1313;580</Position>
-                          <StyleLien>1</StyleLien>
-                          <PreAssertion>?</PreAssertion>
-                          <PostAssertion>?</PostAssertion>
-                          <Titre>obtenirMotPlusProbable(mot)</Titre>
-                          <DetailsVisible>1</DetailsVisible>
-                          <DetailsVideVisible>0</DetailsVideVisible>
-                          <Enfants/>
-                        </Procedure>
-                        <Sortie>
-                          <Position>1557;596</Position>
-                        </Sortie>
-                      </Enfants>
-                    </operation>
-                    <operation>
-                      <Titre>Sinon</Titre>
-                      <Enfants>
-                        <Action>
-                          <Position>1622;586</Position>
-                          <StyleLien>1</StyleLien>
-                          <PreAssertion>?</PreAssertion>
-                          <PostAssertion>?</PostAssertion>
-                          <Titre>Pas de modification &#xd;
-motCorrige = mot</Titre>
-                          <DetailsVisible>1</DetailsVisible>
-                          <DetailsVideVisible>0</DetailsVideVisible>
-                          <Enfants/>
-                        </Action>
-                      </Enfants>
-                    </operation>
-                  </operationsLogiques>
-                </Condition>
-              </Enfants>
-            </operation>
-          </operationsLogiques>
-        </Condition>
         <Action>
-          <Position>841;196</Position>
+          <Position>1125;443</Position>
           <StyleLien>1</StyleLien>
           <PreAssertion>listePertinante,
 listeMotAvecDamerauLevenshtein</PreAssertion>

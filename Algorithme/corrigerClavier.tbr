@@ -2,7 +2,7 @@
 <!DOCTYPE Tabula_Rasa>
 <Algorithme>
   <nom>corrigerClavier</nom>
-  <date_creation>20/12/2023 11:15</date_creation>
+  <date_creation>11/1/2024 11:15</date_creation>
   <Elements>
     <Action>
       <Position>650;20</Position>
@@ -69,7 +69,7 @@
                               <operationsLogiques>
                                 <operation>
                                   <Titre>mot[i] != matrice[indiceX][indiceY]
-&amp;&amp; dictinnaire[i] = matrice[indiceX][indiceY]</Titre>
+|| dictinnaire[i] = matrice[indiceX][indiceY]</Titre>
                                   <Enfants>
                                     <Iteration>
                                       <Position>694.5;573.5</Position>
@@ -84,7 +84,7 @@
                                           <IterationFixe>1</IterationFixe>
                                           <Enfants>
                                             <ConditionMultiple>
-                                              <Position>360.5;743</Position>
+                                              <Position>359.5;743</Position>
                                               <StyleLien>1</StyleLien>
                                               <Titre>matrice[indiceX][indiceY]</Titre>
                                               <operationsLogiques>
