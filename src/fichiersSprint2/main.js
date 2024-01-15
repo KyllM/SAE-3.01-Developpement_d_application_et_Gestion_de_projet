@@ -33,7 +33,6 @@ class Main {
     }
 
     init() {
-        //document.addEventListener("DOMContentLoaded", function() {
             console.log("Bienvenue dans le projet Vinylog");
             console.log("---------------------------------------------------");
             console.log("---------------------------------------------");
@@ -45,44 +44,67 @@ class Main {
                 const motElement = document.getElementById("mot");
                 const motValue = motElement.value.trim();
                 if (motValue !== "") {
-                    const mot = new Mot(motValue.length);
-                    console.log("mot :", mot);
-            
+                    const mot = new Mot(motValue.length, motValue);
+                    console.log("mot :", mot.getTaille(), mot.getDescription());
+                    
+                    /**
+                     *              Algorithme de Damerau-Levenshtein
+                     **/
                     const listeMotAvecDamerauLevenshteinsteMot = {};
-
                     //parcours des valeurs                    
-                    Object.values(dictionnaireJSON).forEach(async (element) => {
-                        try {
-                            const distance = await mot.damerauLevenshteinDistance(element, mot);
-                            if (distance < 2) {
-                                listeMotAvecDamerauLevenshteinsteMot[element] = distance;
+                    const dictionnaireValues = Object.values(dictionnaireJSON);
+                    // Parcourir les catégories du dictionnaire
+                    for (const categorie in dictionnaireValues) {
+                        if (dictionnaireValues.hasOwnProperty(categorie)) {
+                            // Parcourir les éléments de chaque catégorie
+                            for (const elementCat of dictionnaireValues[categorie]) {
+                                // Parcourir les propriétés de chaque élément
+                                for (const prop in elementCat) {
+                                    // Vérifier si la propriété est une chaîne de caractères
+                                    if (elementCat.hasOwnProperty(prop)) {
+                                        if (typeof elementCat[prop] === "string") {
+                                            const distance = await mot.damerauLevenshteinDistance(elementCat[prop], mot.getDescription());
+                                            if (distance < 2) {
+                                                listeMotAvecDamerauLevenshteinsteMot[elementCat[prop]] = distance;
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                        } catch (error) {
-                            console.error("Une erreur s'est produite lors du calcul de la distance :", error);
                         }
-                    });
-
+                    }                                     
+                    
+                    console.log("L'algorithme de Damerau-Levenshtein a fini de tourner");
+                    console.log("---------------------------------------------------");
+                    console.log("D'après l'algorithme de Damerau-Levenshtein, les mots suivants sont proches du mot saisi :");
                     console.log("listeMotAvecDamerauLevenshteinsteMot :", listeMotAvecDamerauLevenshteinsteMot);
-            
-                    mot.explorerCombinaison();
-                    mot.afficherCombinaison();
-            
+
                     // Affichage des résultats
                     this.afficherResultats(listeMotAvecDamerauLevenshteinsteMot);
+
+                    /**
+                     *              Algorithme de correction du clavier
+                     **/
+                    mot.corrigerClavier(mot.getDescription());
+
+                    mot.afficherCombinaison();
+            
+                    
                 }
-            });            
-        //});
-    }
+            }
+        )};           
+    
     
     afficherResultats(listeMotAvecDamerauLevenshteinsteMot) {
         const resultatElement = document.getElementById("resultat");
         resultatElement.innerHTML = "";
         resultatElement.innerHTML += `<p> Le resultat de l'algorithme de damarau-levenshtein est : </p> <br>`;
         for (const [mot, distance] of Object.entries(listeMotAvecDamerauLevenshteinsteMot)) {
-            resultatElement.innerHTML += `<p>${mot} (${distance})</p>`;
+            resultatElement.innerHTML += `<p>${mot} avec une distance de ${distance}</p>`;
         }
     }
 }
+
 
 // Création d'une instance de l'application
 const vinylogApp = new Main();

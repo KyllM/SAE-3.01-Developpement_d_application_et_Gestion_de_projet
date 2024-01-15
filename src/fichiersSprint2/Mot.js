@@ -18,17 +18,17 @@ export class Mot extends Donnee{
 
     //ATTRIBUTS
     taille; //taille du mot
-    ArrayDonnee = new Array(); //tableau de mot
-    
 
     //CONSTRUCTEUR
     /**
      * @brief constructeur de la classe Mot
      * @param {*} taille 
+     * @param {*} description
      */
-    constructor(taille){
+    constructor(taille, description){
         super();
         this.setTaille(taille);
+        this.setDescription(description);
     };
 
     //ENCAPSULATION
@@ -41,18 +41,16 @@ export class Mot extends Donnee{
         return this.taille;
     }
     
-
     setTaille(uneTaille){
         this.taille = uneTaille;
     }
 
-    tailleMot(unMot)// affiche la longueur d'un mot
-    {
-         console.log(unMot.length); 
+    getDescription(){
+        return this.description;
     }
 
-    setMot(uneTaille){
-        this.setTaille(uneTaille);
+    setDescription(uneDescription){
+        this.description = uneDescription;
     }
 
     //METHODES SPECIFIQUES
