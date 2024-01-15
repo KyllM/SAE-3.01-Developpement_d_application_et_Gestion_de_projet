@@ -7,9 +7,7 @@
  */
 
 //INCLUSION DES FICHIERS JS
-import {Donnee} from "./Donnee.js";
-import {matrice} from "./Donnee.js";
-import { dictionnaireJSON } from "./Donnee.js";
+import {Donnee, matrice, dictionnaireJSON} from "./Donnee.js";
 
 
 //------------------------------------
@@ -19,19 +17,18 @@ import { dictionnaireJSON } from "./Donnee.js";
 export class Mot extends Donnee{
 
     //ATTRIBUTS
+    taille; //taille du mot
     ArrayDonnee = new Array(); //tableau de mot
-    listeMotAvecDamerauLevenshteinsteMot = new Array(); //tableau de mot avec distance de Damerau-Levenshtein < 2
+    
 
     //CONSTRUCTEUR
     /**
      * @brief constructeur de la classe Mot
      * @param {*} taille 
-     * @param {*} description 
      */
-    constructor(taille, description){
+    constructor(taille){
         super();
         this.setTaille(taille);
-        this.setDescription(description);
     };
 
     //ENCAPSULATION
@@ -44,26 +41,18 @@ export class Mot extends Donnee{
         return this.taille;
     }
     
-    getDescrpition(){
-        return this.description;
-    }
 
     setTaille(uneTaille){
         this.taille = uneTaille;
     }
 
-    setDescription(uneDescrpition){
-        this.description = uneDescrpition;
-    }
-
     tailleMot(unMot)// affiche la longueur d'un mot
     {
-         console.log(unMot.lenght()); 
+         console.log(unMot.length); 
     }
 
-    setMot(uneTaille, uneDescription){
-        setTaille(uneTaille);
-        setDescription(uneDescription);
+    setMot(uneTaille){
+        this.setTaille(uneTaille);
     }
 
     //METHODES SPECIFIQUES
@@ -113,11 +102,11 @@ export class Mot extends Donnee{
             return tableau[longueur1][longueur2];
     }
     
-    ajouterTableau(mot, listeMotAvecDamerauLevenshteinsteMot){
+    /*ajouterTableau(mot, listeMotAvecDamerauLevenshteinsteMot){
             if(this.damarauLevenshteinDistance(mot, this.getMot()) < 2){
                 listeMotAvecDamerauLevenshteinsteMot.push(mot);
             }
-    }
+    }*/
 
     recupererCoordonnesLettre(lettre){
     

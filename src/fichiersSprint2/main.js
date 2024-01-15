@@ -1,53 +1,88 @@
 /**
  * @file main.js
  * @brief Fichier principal du projet
- * @version 1.0
- * @date 2021-05-18
+ * @version 1.1
+ * @date 2024-01-15
  * @author MaxMontouro 
  */
 
 //INCLUSION DES FICHIERS JS
-import {Mot} from "./Mot.js";
-import {Donnee} from "./Donnee.js";
-import {Vinyle} from "./Vinyle.js";
-import {dictionnaireJSON} from "./Donnee.js";
+import { Mot } from "./Mot.js";
+import { dictionnaireJSON } from "./Donnee.js";
+
+//------------------------------------
+//         méthode pour l'AJAX
+//------------------------------------
+
+function effectuerRequeteAjax(url) {
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function () {
+        document.getElementById("resultat").innerHTML = this.responseText;
+    }
+    xhttp.open("GET", url);
+    xhttp.send();
+}
 
 //------------------------------------
 //              Main
 //------------------------------------
-async function main() {
 
-    document.addEventListener("DOMContentLoaded", function () {
-        console.log("Bienvenue dans le projet Vinylog");
-        console.log("---------------------------------------------------");
-        console.log("---------------------------------------------");
+class Main {
+    constructor() {
+        this.init();
+    }
 
-        const listeMotAvecDamerauLevenshteinsteMot = {};
-        const formulaire = document.getElementById("demonstration-form");
+    init() {
+        //document.addEventListener("DOMContentLoaded", function() {
+            console.log("Bienvenue dans le projet Vinylog");
+            console.log("---------------------------------------------------");
+            console.log("---------------------------------------------");
+    
+            const formulaire = document.getElementById("demonstration-form");
+    
+            formulaire.addEventListener("submit", async (event) => {
+                event.preventDefault();
+                const motElement = document.getElementById("mot");
+                const motValue = motElement.value.trim();
+                if (motValue !== "") {
+                    const mot = new Mot(motValue.length);
+                    console.log("mot :", mot);
+            
+                    const listeMotAvecDamerauLevenshteinsteMot = {};
 
-        formulaire.addEventListener("submit", async function (event) {
-            event.preventDefault(); // Empêche le rechargement de la page lors de la soumission du formulaire
-            const motElement = document.getElementById("demonstration");
-            const motValue = motElement.value;
-            console.log("avant le if");
-            if (motValue.trim() !== "") {
-                const mot = new Mot(motValue);
-                console.log("mot :");
-                console.log(mot);
-                for (const element of dictionnaireJSON) {
-                    const distance = await mot.damaraulevenshtein(element, mot);
-                    if (distance < 2) {
-                        listeMotAvecDamerauLevenshteinsteMot[element] = distance;
-                    }
+                    //parcours des valeurs                    
+                    Object.values(dictionnaireJSON).forEach(async (element) => {
+                        try {
+                            const distance = await mot.damerauLevenshteinDistance(element, mot);
+                            if (distance < 2) {
+                                listeMotAvecDamerauLevenshteinsteMot[element] = distance;
+                            }
+                        } catch (error) {
+                            console.error("Une erreur s'est produite lors du calcul de la distance :", error);
+                        }
+                    });
+
+                    console.log("listeMotAvecDamerauLevenshteinsteMot :", listeMotAvecDamerauLevenshteinsteMot);
+            
+                    mot.explorerCombinaison();
+                    mot.afficherCombinaison();
+            
+                    // Affichage des résultats
+                    this.afficherResultats(listeMotAvecDamerauLevenshteinsteMot);
                 }
-                console.log("listeMotAvecDamerauLevenshteinsteMot :");
-                console.log(listeMotAvecDamerauLevenshteinsteMot);
-
-                mot.explorerCombinaison();
-                mot.afficherCombinaison();
-                }
-            });
-    });
+            });            
+        //});
+    }
+    
+    afficherResultats(listeMotAvecDamerauLevenshteinsteMot) {
+        const resultatElement = document.getElementById("resultat");
+        resultatElement.innerHTML = "";
+        resultatElement.innerHTML += `<p> Le resultat de l'algorithme de damarau-levenshtein est : </p> <br>`;
+        for (const [mot, distance] of Object.entries(listeMotAvecDamerauLevenshteinsteMot)) {
+            resultatElement.innerHTML += `<p>${mot} (${distance})</p>`;
+        }
+    }
 }
 
-
+// Création d'une instance de l'application
+const vinylogApp = new Main();

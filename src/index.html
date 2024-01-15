@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script type="module" src="fichiersSprint2/main.js"></script>
+    <script type="module" src="fichiersSprint2/Main.js"></script>
     <script type="module" src="fichiersSprint2/Donnee.js"></script>
     <script type="module" src="fichiersSprint2/Vinyle.js"></script>
     <script type="module" src="fichiersSprint2/Mot.js"></script>
@@ -14,10 +14,10 @@
 
 <body>
     <h1>Demonstration de notre algorithme</h1>
-    <form action="" id="demonstration-form">
+    <form method="GET" id="demonstration-form">
         <label for="mot">Entrer un mot :</label><br>
-        <input type="text" required></input><br>
-        <button id="btn">Valider</button>
+        <input type="text" id="mot" required></input><br>
+        <button type="submit" id="btn">Valider</button>
     </form>
     <div id="resultat"></div>
 </body>

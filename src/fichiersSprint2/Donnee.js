@@ -6,7 +6,6 @@
  */
 
 //declaration de la matrice clavier
-var matrice = new Array();
 var matrice = [
     ['&', 'é', '"', "'", '(', '-', 'è', '_', 'ç', 'à', ')'],
     ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '^'],
@@ -52,10 +51,7 @@ function recuperationJSON(cheminFichierJSON){
                 // Si c'est un objet, utiliser directement
                 resultat = donneesJSON;
             }
-        
-            // Afficher le résultat
-            console.log("Résultat JSON :", resultat);
-        
+
             // Renvoyer le résultat
             return resultat;
         })           

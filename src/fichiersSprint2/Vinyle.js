@@ -54,8 +54,8 @@ export class Vinyle extends Donnee {
     }
 
     toString(){
-        console.log('Je suis le vinyle ' + this.getTitre() + " créé par " + this.getArtiste() + 
-        " mon genre musicale est : " + this.getGenre() + " et je suis sorti en : " + this.getAnnee());
-    }
+        return 'Je suis le vinyle ' + this.getTitre() + " créé par " + this.getArtiste() + 
+        " mon genre musical est : " + this.getGenre() + " et je suis sorti en : " + this.getAnnee();
+    }    
 }
 
