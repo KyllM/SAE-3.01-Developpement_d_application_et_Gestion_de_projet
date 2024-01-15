@@ -9,7 +9,7 @@
 //INCLUSION DES FICHIERS JS
 import {Donnee} from "./Donnee.js";
 import {matrice} from "./Donnee.js";
-import { dictionnaireJSON } from "./main.js";
+import { dictionnaireJSON } from "./Donnee.js";
 
 
 //------------------------------------
@@ -19,7 +19,6 @@ import { dictionnaireJSON } from "./main.js";
 export class Mot extends Donnee{
 
     //ATTRIBUTS
-    unMot = new Mot();
     ArrayDonnee = new Array(); //tableau de mot
     listeMotAvecDamerauLevenshteinsteMot = new Array(); //tableau de mot avec distance de Damerau-Levenshtein < 2
 
@@ -30,7 +29,9 @@ export class Mot extends Donnee{
      * @param {*} description 
      */
     constructor(taille, description){
-        setMot(taille, description);
+        super();
+        this.setTaille(taille);
+        this.setDescription(description);
     };
 
     //ENCAPSULATION
@@ -153,7 +154,7 @@ export class Mot extends Donnee{
                 compteur = 0;
                 for(let i = 0; i < mot.length; i++){
                     var indiceX = this.recupererCoordonnesLettre(mot[i][0]);
-                    var indiceY = this.recupererCoordonnesLettre(element[i][0]);
+                    var indiceY = this.recupererCoordonnesLettre(mot[i][1]);
                     if(mot[i] != matrice[indiceX][indiceY] && element[i] != matrice[indiceX][indiceY]){
                         for(let j = indiceX; j< matrice.length; j++){
                             for(let k=indiceY; k< matrice[j].length; k++){

@@ -10,10 +10,12 @@
 //           Classe Artiste
 //------------------------------------
 
+import { Donnee } from "./Donnee.js";
 class Artiste extends Donnee {
     
         //CONSTRUCTEUR
         constructor(langue, photo){
+            super();
             this.setLangue(langue);
             this.setPhoto(photo);
         }

@@ -10,14 +10,16 @@
 //      Classe Vinyle
 //------------------------------------
 
+import { Donnee } from "./Donnee.js";
 
-class Vinyle extends Donnee{
+export class Vinyle extends Donnee {
     constructor(titre, artiste, annee, genre){
+        super();
         this.titre = titre;
         this.artiste = artiste;
         this.annee = annee;
         this.genre = genre;
-    };
+    }
 
     getTitre(){
         return this.titre;
@@ -44,7 +46,7 @@ class Vinyle extends Donnee{
     }
 
     setAnnee(uneAnnee){
-        this.anee = uneAnnee;
+        this.annee = uneAnnee;
     }
 
     setGenre(unGenre){
@@ -55,6 +57,5 @@ class Vinyle extends Donnee{
         console.log('Je suis le vinyle ' + this.getTitre() + " créé par " + this.getArtiste() + 
         " mon genre musicale est : " + this.getGenre() + " et je suis sorti en : " + this.getAnnee());
     }
-
-
 }
+
