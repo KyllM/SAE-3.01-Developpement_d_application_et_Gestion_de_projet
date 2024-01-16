@@ -163,29 +163,40 @@ export class Mot extends Donnee{
     }
     
     
-    verifierCoherence(listeDamarau, listeClavier){
+    verifierCoherence(listeDamarau, listeClavier) {
         /**
-         * @brief : methode qui permet de vérifier la cohérence entre les deux algorithmes
+         * @brief : méthode qui permet de vérifier la cohérence entre les deux algorithmes
          * @param : listeDamarau, listeClavier
-         * @return {string} motLePlusPertinant - Mot le plus pertinent filtré par la saisie clavier et la distance de Damerau-Levenshtein
+         * @return {string|object} motLePlusPertinant - Clé ayant la plus petite valeur ou objet contenant toutes les valeurs
          */
     
-        let motLePlusPertinant;
+        const clesClavier = Object.keys(listeClavier);
+        const clesDamarau = Object.keys(listeDamarau);
     
-        for (const motDamarau in listeDamarau) {
-            if (listeDamarau.hasOwnProperty(motDamarau)) {
-                for (const motClavier in listeClavier) {
-                    if (listeClavier.hasOwnProperty(motClavier)) {
-                        if(motDamarau === motClavier){
-                            motLePlusPertinant = motDamarau;
-                        }
-                    }
-                }
-            }
+        const valeursClavier = Object.values(listeClavier);
+        const valeursDamarau = Object.values(listeDamarau);
+    
+        if (valeursClavier.length === 0 || valeursDamarau.length === 0) {
+            // Si l'une des listes est vide, renvoyer un objet vide
+            return {};
         }
     
-        return motLePlusPertinant;
+        const minValeurClavier = Math.min(...valeursClavier);
+        const minValeurDamarau = Math.min(...valeursDamarau);
+    
+        const minCleClavier = clesClavier[valeursClavier.indexOf(minValeurClavier)];
+        const minCleDamarau = clesDamarau[valeursDamarau.indexOf(minValeurDamarau)];
+    
+        if (minValeurClavier === Infinity && minValeurDamarau === Infinity) {
+            // Si aucune valeur minimale n'est trouvée, renvoyer un objet contenant toutes les valeurs
+            return {
+                listeClavier: listeClavier,
+                listeDamarau: listeDamarau
+            };
+        }
+    
+        return minValeurClavier < minValeurDamarau ? minCleClavier : minCleDamarau;
     }
     
-    
+        
 }

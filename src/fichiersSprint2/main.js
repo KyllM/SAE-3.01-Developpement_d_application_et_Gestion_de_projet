@@ -112,7 +112,14 @@ class Main {
                     this.afficherResultatsClavier(listeMotCorrige, distanceSaisie);
                     //mot.afficherCombinaison();
             
-                    
+                    console.log("---------------------------------------------------");
+                    console.log("L'algorithme de cohérence a commencé à tourner");
+                    console.log("---------------------------------------------------");
+                    console.log("D'après l'algorithme de correction de cohérence, les mots suivants sont proches du mot saisi (avec une distance maximum de " + distanceSaisie+ " ):   ");
+                    //affichage dans le navigateur
+                    var motLePlusPertinant = mot.verifierCoherence(listeMotAvecDamerauLevenshteinsteMot, listeMotCorrige);
+                    console.log("motLePlusPertinant :", motLePlusPertinant);
+                    this.afficherResultatsCoherence(motLePlusPertinant, distanceSaisie);
                 }
             })
         };           
@@ -123,7 +130,7 @@ class Main {
             resultatElement.innerHTML = "";
             resultatElement.innerHTML += `<p> Le resultat de l'algorithme de damarau-levenshtein est (avec une distance de ${distanceSaisie}): </p> <br>`;
             for (const [mot, distance] of Object.entries(listeMotAvecDamerauLevenshteinsteMot)) {
-                resultatElement.innerHTML += `<p>${mot} avec une distance de ${distance}</p>`;
+                resultatElement.innerHTML += `<p>${mot} avec une distance d'au plus ${distance} erreurs</p>`;
             }
         }
 
@@ -132,17 +139,15 @@ class Main {
             resultatElement.innerHTML = "";
             resultatElement.innerHTML += `<p> Le resultat de l'algorithme de correction clavier est (avec une distance de ${distanceSaisie}): </p> <br>`;
             for (const [mot, distance] of Object.entries(listeClavier)) {
-                resultatElement.innerHTML += `<p>${mot} avec une distance de ${distance}</p>`;
+                resultatElement.innerHTML += `<p>${mot} avec une distance d'au plus ${distance} erreurs</p>`;
             }
         }
 
-        afficherResultatsCoherence(listeDamarau, listeClavier) {
+        afficherResultatsCoherence(motLePlusPertinant, distanceSaisie) {
             const resultatElement = document.getElementById("resultatCoherence");
             resultatElement.innerHTML = "";
             resultatElement.innerHTML += `<p> Le resultat de l'algorithme de cohérence est : </p> <br>`;
-            for (const [mot, distance] of Object.entries(listeClavier)) {
-                resultatElement.innerHTML += `<p>${mot} avec une distance de ${distance}</p>`;
-            }
+            resultatElement.innerHTML += `<p>${motLePlusPertinant} avec une distance d'au plus ${distanceSaisie} erreurs</p>`;
         }
 }
 

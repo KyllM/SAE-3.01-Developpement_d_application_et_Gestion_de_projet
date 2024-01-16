@@ -45,6 +45,10 @@
     {
         "nomTag" : "classique",
         "description" : "musique douce"
+    },
+    {
+        "nomTag" : "jazz",
+        "description" : "musique de jazz"
     }
     ], 
     "Vinyle" : [
