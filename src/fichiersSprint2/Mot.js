@@ -10,6 +10,28 @@
 import {Donnee, dictionnaireJSON} from "./Donnee.js";
 import {Lettre} from "./Lettre.js";
 
+function fusionnerSansDoublons(objet1, objet2) {
+    // Créer un nouvel objet pour stocker les résultats de la fusion
+    const resultat = {};
+
+    // Fusionner les clés de l'objet1
+    for (const cle in objet1) {
+        if (objet1.hasOwnProperty(cle)) {
+            resultat[cle] = objet1[cle];
+        }
+    }
+
+    // Fusionner les clés de l'objet2 qui ne sont pas déjà présentes dans l'objet1
+    for (const cle in objet2) {
+        if (objet2.hasOwnProperty(cle) && !objet1.hasOwnProperty(cle)) {
+            resultat[cle] = objet2[cle];
+        }
+    }
+
+    return resultat;
+}
+
+
 //------------------------------------
 //      Classe Mot
 //------------------------------------
@@ -186,13 +208,14 @@ export class Mot extends Donnee{
     
         const minCleClavier = clesClavier[valeursClavier.indexOf(minValeurClavier)];
         const minCleDamarau = clesDamarau[valeursDamarau.indexOf(minValeurDamarau)];
-    
-        if (minValeurClavier === Infinity && minValeurDamarau === Infinity) {
+        
+        if(minCleClavier.length === this.getDescription().length && minCleDamarau.length === this.getDescription().length){
+            return fusionnerSansDoublons(listeClavier, listeDamarau);
+        }
+
+        if (minValeurClavier === minValeurDamarau && minCleClavier !== minCleDamarau) {
             // Si aucune valeur minimale n'est trouvée, renvoyer un objet contenant toutes les valeurs
-            return {
-                listeClavier: listeClavier,
-                listeDamarau: listeDamarau
-            };
+            return fusionnerSansDoublons(listeClavier, listeDamarau);
         }
     
         return minValeurClavier < minValeurDamarau ? minCleClavier : minCleDamarau;

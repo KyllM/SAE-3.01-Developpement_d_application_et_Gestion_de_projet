@@ -119,7 +119,13 @@ class Main {
                     //affichage dans le navigateur
                     var motLePlusPertinant = mot.verifierCoherence(listeMotAvecDamerauLevenshteinsteMot, listeMotCorrige);
                     console.log("motLePlusPertinant :", motLePlusPertinant);
-                    this.afficherResultatsCoherence(motLePlusPertinant, distanceSaisie);
+                    console.log(typeof motLePlusPertinant);
+                    if(typeof motLePlusPertinant === "object"){
+                        this.afficherResultatsCoherenceObjet(motLePlusPertinant, distanceSaisie);
+                    }
+                    else{
+                        this.afficherResultatsCoherenceClassique(motLePlusPertinant, distanceSaisie);
+                    }
                 }
             })
         };           
@@ -143,7 +149,16 @@ class Main {
             }
         }
 
-        afficherResultatsCoherence(motLePlusPertinant, distanceSaisie) {
+        afficherResultatsCoherenceObjet(motLePlusPertinant, distanceSaisie) {
+            const resultatElement = document.getElementById("resultatCoherence");
+            resultatElement.innerHTML = "";
+            resultatElement.innerHTML += `<p> Le resultat de l'algorithme de correction cohérence n'a pas trouvé de résultat cohérent entre les deux algorithmes</p>`;
+            resultatElement.innerHTML += `<p> Il s'agit des résultats contenu dans le JSON : </p> <br>`;
+            for (const [mot, distance] of Object.entries(motLePlusPertinant)) {
+                resultatElement.innerHTML += `<p>${mot} avec une distance d'au plus ${distance} erreurs</p>`;
+            }
+        }
+        afficherResultatsCoherenceClassique(motLePlusPertinant, distanceSaisie) {
             const resultatElement = document.getElementById("resultatCoherence");
             resultatElement.innerHTML = "";
             resultatElement.innerHTML += `<p> Le resultat de l'algorithme de cohérence est : </p> <br>`;
