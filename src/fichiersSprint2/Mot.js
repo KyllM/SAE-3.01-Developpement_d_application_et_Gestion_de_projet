@@ -123,108 +123,16 @@ export class Mot extends Donnee{
             }
     }
     
-    corrigerClavier(mot){
-        /** 
-        *  @brief : methode qui permet de comparer un mot saisie au clavier et permet d'en ressortir un mot corrige avec un nombre d'erreur < 2
-        *  @param : mot : string 
-        *  @return : motPertinant 
-        */
-    
-        var compteur = 0; //compteur de faute
-        let motPertinant = ""; //mot corriger
-        let listePertinante = {}; //tableau de mot corriger
-
-
-        //parcours du mot
-        //parcours des valeurs                    
-        const dictionnaireValues = Object.values(dictionnaireJSON);
-        // Parcourir les catégories du dictionnaire
-        for (const categorie in dictionnaireValues) {
-            if (dictionnaireValues.hasOwnProperty(categorie)) {
-                // Parcourir les éléments de chaque catégorie
-                for (const elementCategorie of dictionnaireValues[categorie]) {
-                    // Parcourir les propriétés de chaque élément
-                    for (const prop in elementCategorie) {
-                        // Vérifier si la propriété est une chaîne de caractères
-                        if (elementCategorie.hasOwnProperty(prop)) {
-                            if (typeof elementCategorie[prop] === "string") {
-                                if(elementCategorie[prop].length == mot.length){
-                                    compteur = 0;
-                                    for(let i = 0; i < mot.length; i++){
-                                        var indiceX = this.recupererCoordonnesLettre(mot[i][0]);
-                                        var indiceY = this.recupererCoordonnesLettre(mot[i][1]);
-                                        if(mot[i] != matrice[indiceX][indiceY] && elementCategorie[prop][i] != matrice[indiceX][indiceY]){
-                                            for(let j = indiceX; j< matrice.length; j++){
-                                                for(let k=indiceY; k< matrice[j].length; k++){
-                                                    //on regarde si les coordonnees de la lettre recupere dans la matrice clavier sont les bonnes par rapport au mot saisie
-                                                    switch(matrice[indiceX][indiceY]){
-                                                        case matrice[j+1][k]:
-                                                            compteur++;
-                                                            break;
-                                                        case matrice[j][k+1]:
-                                                            compteur++;
-                                                            motPertinant[i] = matrice[j][k+1];
-                                                            break;
-                                                        case matrice[j+1][k+1]:
-                                                            compteur++;
-                                                            motPertinant[i] = matrice[j+1][k+1];
-                                                            break;
-                                                        case matrice[j-1][k]:
-                                                            compteur++;
-                                                            motPertinant[i] = matrice[j-1][k];
-                                                            break;
-                                                        case matrice[j][k-1]:
-                                                            compteur++;
-                                                            motPertinant[i] = matrice[j][k-1];
-                                                            break;
-                                                        case matrice[j-1][k-1]:
-                                                            compteur++;
-                                                            motPertinant[i] = matrice[j-1][k-1];
-                                                            break;
-                                                        case matrice[j+1][k-1]:
-                                                            compteur++;
-                                                            motPertinant[i] = matrice[j+1][k-1];
-                                                            break;
-                                                        case matrice[j-1][k+1]:
-                                                            compteur++;
-                                                            motPertinant[i] = matrice[j-1][k+1];
-                                                            break;
-                                                        }
-                                                    }
-                                                }   
-                                            }
-                                            else{
-                                                motPertinant[i] = mot[i];
-                                            }
-                            
-                                        //si le compteur est superieur ou egal a 2 on sort de la boucle
-                                        if(compteur >= 2){
-                                            break;
-                                        }
-                                    }
-                                }
-                                if(compteur < 0 ){
-                                    listePertinante.push(motPertinant);
-                                }
-                                }
-                            }
-                        }
-                    }
-                }
-            }  
-        return listePertinante;
-    } 
-
-    corrigerClavier(mot) {
+    corrigerClavier(distanceErreur) {
         /**
          * @brief : méthode qui permet de comparer un mot saisi au clavier
-         *          et de renvoyer un mot corrigé avec un nombre d'erreurs < 2
-         * @param : mot : string
+         *          et de renvoyer un mot corrigé avec un nombre d'erreurs inférieur à distanceErreur
+         * @param : distanceErreur : nombre d'erreurs maximal autorisé
          * @return : listePertinante : tableau de mots corrigés
          */
     
         // Initialisations
-        let listePertinante = []; // Tableau de mots corrigés
+        let listePertinante = {}; // Tableau de mots corrigés
     
         // Parcours des catégories du dictionnaire
         for (const categorie in dictionnaireJSON) {
@@ -232,11 +140,13 @@ export class Mot extends Donnee{
                 // Parcours des éléments de chaque catégorie
                 for (const elementCategorie of dictionnaireJSON[categorie]) {
                     // Comparaison avec le mot saisi
-                    const comparaison = this.comparerMots(elementCategorie, mot);
+                    if (elementCategorie.length === this.getTaille()) {
+                        const comparaison = this.comparerMots(elementCategorie, this.getDescription(), distanceErreur);
     
-                    // Si la comparaison est valide, ajouter le mot corrigé à la liste
-                    if (comparaison.isValid) {
-                        listePertinante.push(comparaison.motCorrige);
+                        // Si la comparaison est valide, ajouter le mot corrigé à la liste
+                        if (comparaison.isValid) {
+                            listePertinante[elementCategorie] = comparaison.motCorrige;
+                        }
                     }
                 }
             }
@@ -244,15 +154,16 @@ export class Mot extends Donnee{
     
         return listePertinante;
     }
-
-    comparerMots(motDictionnaire, motSaisi) {
+    
+    comparerMots(motJSON, motSaisi, distanceErreur) {
         /**
          * @brief : comparer deux mots caractère par caractère
-         * @param : motDictionnaire : mot à comparer
+         * @param : motJSON : mot du dictionnaire à comparer
          * @param : motSaisi : mot saisi par l'utilisateur
+         * @param : distanceErreur : nombre d'erreurs maximal autorisé
          * @return : objet avec isValid (booléen) et motCorrige (mot corrigé)
          */
-
+    
         let compteur = 0;
         let motCorrige = "";
     
@@ -263,79 +174,86 @@ export class Mot extends Donnee{
             const indiceY = this.recupererCoordonnesLettre(motSaisi[i][1]);
     
             // Comparaison avec la matrice clavier
-            if (motSaisi[i] !== matrice[indiceX][indiceY] && motDictionnaire[i] !== matrice[indiceX][indiceY]){
-                for(let j = indiceX; j< matrice.length; j++){
-                    for(let k=indiceY; k< matrice[j].length; k++){
-                        //on regarde si les coordonnees de la lettre recupere dans la matrice clavier sont les bonnes par rapport au mot saisie
-                        switch(matrice[indiceX][indiceY]){
-                            case matrice[j+1][k]:
+            if (motSaisi[i] !== matrice[indiceX][indiceY] && motJSON[i] !== matrice[indiceX][indiceY]) {
+                for (let j = indiceX; j < matrice.length; j++) {
+                    for (let k = indiceY; k < matrice[j].length; k++) {
+                        //on regarde si les coordonnees de la lettre recupérée dans la matrice clavier sont les bonnes par rapport au mot saisi
+                        switch (matrice[indiceX][indiceY]) {
+                            case matrice[j + 1][k]:
                                 compteur++;
                                 break;
-                            case matrice[j][k+1]:
+                                motCorrige.push(matrice[j + 1][k]);
+                            case matrice[j][k + 1]:
                                 compteur++;
-                                motPertinant[i] = matrice[j][k+1];
+                                motCorrige.push(matrice[j][k + 1]);
                                 break;
-                            case matrice[j+1][k+1]:
+                            case matrice[j + 1][k + 1]:
                                 compteur++;
-                                motPertinant[i] = matrice[j+1][k+1];
+                                motCorrige.push(matrice[j + 1][k + 1]);
                                 break;
-                            case matrice[j-1][k]:
+                            case matrice[j - 1][k]:
                                 compteur++;
-                                motPertinant[i] = matrice[j-1][k];
+                                motCorrige.push(matrice[j - 1][k]);
                                 break;
-                            case matrice[j][k-1]:
+                            case matrice[j][k - 1]:
                                 compteur++;
-                                motPertinant[i] = matrice[j][k-1];
+                                motCorrige.push(matrice[j][k - 1]);
                                 break;
-                            case matrice[j-1][k-1]:
+                            case matrice[j - 1][k - 1]:
                                 compteur++;
-                                motPertinant[i] = matrice[j-1][k-1];
+                                motCorrige.push(matrice[j - 1][k - 1]);
                                 break;
-                            case matrice[j+1][k-1]:
+                            case matrice[j + 1][k - 1]:
                                 compteur++;
-                                motPertinant[i] = matrice[j+1][k-1];
+                                motCorrige.push(matrice[j + 1][k - 1]);
                                 break;
-                            case matrice[j-1][k+1]:
+                            case matrice[j - 1][k + 1]:
                                 compteur++;
-                                motPertinant[i] = matrice[j-1][k+1];
+                                motCorrige.push(matrice[j - 1][k + 1]);
                                 break;
-                            }
+
+                            default:
+                                // Si la lettre n'est pas corrigée, utiliser le caractère actuel
+                                motCorrige.push(motSaisi[i]);
+                                break;
                         }
-                    }   
-            } else {
-                // Si la comparaison réussit, utiliser le caractère actuel
-                motCorrige += motSaisi[i];
-            }
+                    }
+                }
     
-            // Si le compteur est supérieur ou égal à 2, sortir de la boucle
-            if (compteur >= 2) {
+            // Si le compteur est supérieur ou égal à distanceErreur, sortir de la boucle
+            if (compteur > distanceErreur) {
                 break;
             }
         }
     
         // Retourner un objet avec les résultats de la comparaison
         return {
-            isValid: compteur < 2, // La comparaison est valide si le compteur est inférieur à 2
+            isValid: compteur < distanceErreur, // La comparaison est valide si le compteur est inférieur à distanceErreur
             motCorrige: motCorrige,
         };
     }
+}
+    
+
     verifierCoherence(mot, motPertinant, tableau){
         /**
-         * 
-         * @param {+} mot 
-         * @param {*} motPertinant 
-         * @param {*} tableau 
-         * @return motLePlusPertinant qui contient le mot le plus pertinant par rapport au mot saisie. Ce mot a été filtré par rapport à la saisie clavier et damaraulevenshtein
+         * @param {string} mot - Mot saisi par l'utilisateur
+         * @param {string} motPertinant - Mot corrigé pertinent
+         * @param {Array} tableau - Tableau de mots pertinents
+         * @return {string} motLePlusPertinant - Mot le plus pertinent filtré par la saisie clavier et la distance de Damerau-Levenshtein
          */
     
-            let motLePlusPertinant;
-            if(tableau.includes(motPertinant)){
-                motLePlusPertinant = motPertinant;
-            }
-            else{
-                this.damarauLevenshteinDistance(mot, motPertinant);
-            }
-            return motLePlusPertinant;
+        let motLePlusPertinant;
+    
+        if (tableau.includes(motPertinant)) {
+            motLePlusPertinant = motPertinant;
+        } else {
+            // Mettez à jour motLePlusPertinant en utilisant la distance de Damerau-Levenshtein
+            motLePlusPertinant = this.damerauLevenshteinDistance(mot, motPertinant) < 2 ? motPertinant : null;
+        }
+    
+        return motLePlusPertinant;
     }
+    
     
 }
