@@ -75,10 +75,13 @@ class Main {
                     /**
                      *              Algorithme de correction du clavier
                      **/
+                    console.log("---------------------------------------------------");
+                    console.log("L'algorithme de correction du clavier a commencé à tourner");
+                    console.log("---------------------------------------------------");
 
-                    const listeClavier = {};
                     //parcours des valeurs                    
                     // Parcourir les catégories du dictionnaire
+                    var listeMotCorrige = {};
                     for (const categorie in dictionnaireValues) {
                         if (dictionnaireValues.hasOwnProperty(categorie)) {
                             // Parcourir les éléments de chaque catégorie
@@ -88,31 +91,31 @@ class Main {
                                     // Vérifier si la propriété est une chaîne de caractères
                                     if (elementCategorie.hasOwnProperty(prop)) {
                                         if (typeof elementCategorie[prop] === "string") {
-                                            listeClavier = mot.corrigerClavier(elementCategorie, distanceSaisie);
-                                            if (distance <=  distanceSaisie) {
-                                                listeMotAvecDamerauLevenshteinsteMot[elementCategorie[prop]] = distance;
+                                            if(elementCategorie[prop].length === mot.getTaille()){
+                                                var resultat = mot.corrigerClavier(elementCategorie[prop], mot.getDescription(), distanceSaisie)
+                                                listeMotCorrige[elementCategorie[prop]]= resultat[0];
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                    } 
+                    }
 
 
                     console.log("---------------------------------------------------");
                     console.log("L'algorithme de correction du clavier a fini de tourner");
                     console.log("---------------------------------------------------");
                     console.log("D'après l'algorithme de correction du clavier, les mots suivants sont proches du mot saisi (avec une distance maximum de " + distanceSaisie+ " ):   ");
-                    console.log("listeClavier :", listeClavier);
+                    console.log("listeClavier :", listeMotCorrige);
                     //affichage dans le navigateur
-                    this.afficherResultatsClavier(listeClavier, distanceSaisie);
+                    this.afficherResultatsClavier(listeMotCorrige, distanceSaisie);
                     //mot.afficherCombinaison();
             
                     
                 }
-            }
-        )};           
+            })
+        };           
     
     
         afficherResultatsDamarau(listeMotAvecDamerauLevenshteinsteMot, distanceSaisie) {
@@ -128,6 +131,15 @@ class Main {
             const resultatElement = document.getElementById("resultatClavier");
             resultatElement.innerHTML = "";
             resultatElement.innerHTML += `<p> Le resultat de l'algorithme de correction clavier est (avec une distance de ${distanceSaisie}): </p> <br>`;
+            for (const [mot, distance] of Object.entries(listeClavier)) {
+                resultatElement.innerHTML += `<p>${mot} avec une distance de ${distance}</p>`;
+            }
+        }
+
+        afficherResultatsCoherence(listeDamarau, listeClavier) {
+            const resultatElement = document.getElementById("resultatCoherence");
+            resultatElement.innerHTML = "";
+            resultatElement.innerHTML += `<p> Le resultat de l'algorithme de cohérence est : </p> <br>`;
             for (const [mot, distance] of Object.entries(listeClavier)) {
                 resultatElement.innerHTML += `<p>${mot} avec une distance de ${distance}</p>`;
             }

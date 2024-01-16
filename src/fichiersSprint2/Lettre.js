@@ -4,13 +4,6 @@
  */
 
 //------------------------------------
-//      Variable Global
-//------------------------------------
-
-const TAILLE_X = 11; // Taille de la matrice en x
-const TAILLE_Y = 4; // Taille de la matrice en y
-
-//------------------------------------
 //      Classe Lettre
 //------------------------------------
 
@@ -30,7 +23,8 @@ export class Lettre {
         // Attributs encapsulés
         this.carac = lettre;
         this.matrice = this.initialiserMatrice();
-        this.coordonnees = this.getCoordonnees(lettre);
+        this.coordonnees = this.getCoordonnees(this.carac);
+        this.typeMatrice = "clavier";
     }
 
     // ENCAPSULATION
@@ -44,10 +38,6 @@ export class Lettre {
 
     setCarac(nouveauCarac) {
         this.carac = nouveauCarac;
-    }
-
-    getDistance(uneLettre) {
-        return Math.abs(this.coordonnees[0] - uneLettre.coordonnees[0]) + Math.abs(this.coordonnees[1] - uneLettre.coordonnees[1]);
     }
 
     getMatrice() {
@@ -68,19 +58,35 @@ export class Lettre {
             ['w', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '!', '!']
         ];
 
-        // Initialisation des coordonnées
-        for (let i = 0; i < TAILLE_X; i++) {
-            for (let j = 0; j < TAILLE_Y; j++) {
-                this.coordonnees = [i, j];
-            }
-        }
-
         return matrice;
     }
 
     // Méthode pour récupérer les coordonnées de la lettre dans la matrice clavier
-    getCoordonnees(lettre) {
-        return this.coordonnees;
+    getCoordonnees() {
+        let coordonnees;
+        for (let i = 0; i < this.getMatrice().length; i++) {
+            for (let j = 0; j < this.getMatrice()[i].length; j++) {
+                if (this.getMatrice()[i][j] === this.carac) {
+                    coordonnees = [i, j];
+                }
+            }
+        }
+        return coordonnees;
+    }
+    
+    setCoordonnees(nouvellesCoordonnees) {
+        this.coordonnees = nouvellesCoordonnees;
+    }
+    
+    getDistance(uneLettre){ 
+        const distanceLignes = Math.abs(this.getCoordonnees()[0] - uneLettre.getCoordonnees()[0]);
+        const distanceColonnes = Math.abs(this.getCoordonnees()[1]- uneLettre.getCoordonnees()[1]);
+        return Math.sqrt(distanceLignes ** 2 + distanceColonnes ** 2);
     }
 
+    setLettre(nouvelleLettre) {
+        this.carac = nouvelleLettre;
+        this.coordonnees = this.getCoordonnees();
+    }
+  
 }

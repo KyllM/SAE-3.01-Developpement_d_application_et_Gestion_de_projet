@@ -100,127 +100,88 @@ export class Mot extends Donnee{
             return tableau[longueur1][longueur2];
     }
     
-    /*ajouterTableau(mot, listeMotAvecDamerauLevenshteinsteMot){
-            if(this.damarauLevenshteinDistance(mot, this.getMot()) < 2){
-                listeMotAvecDamerauLevenshteinsteMot.push(mot);
-            }
-    }*/
     
-    corrigerClavier(motJSON, distanceErreur) {
-        /**
-         * @brief : méthode qui permet de comparer un mot saisi au clavier
-         *          et de renvoyer un mot corrigé avec un nombre d'erreurs inférieur à distanceErreur
-         * @param : distanceErreur : nombre d'erreurs maximal autorisé
-         * @return : listePertinante : tableau de mots corrigés
-         */
-    
-        // Initialisations
+    corrigerClavier(motJSON, motSaisie, distanceErreur) {
         let listePertinante = {}; // Tableau de mots corrigés
     
         // Parcours des catégories du dictionnaire
-        const comparaison = this.comparerMots(motJSON, this.getDescription(), distanceErreur);
+        const comparaison = this.comparerMots(motJSON, motSaisie);
+    
         // Si la comparaison est valide, ajouter le mot corrigé à la liste
-        if (comparaison.isValid) {
-            listePertinante[motJSON] = comparaison.motCorrige;
-        }
-        return listePertinante;
+        return comparaison;
+
     }
     
-    comparerMots(motJSON, motSaisi, distanceErreur) {
-        /**
-         * @brief : comparer deux mots caractère par caractère
-         * @param : motJSON : mot du dictionnaire à comparer
-         * @param : motSaisi : mot saisi par l'utilisateur
-         * @param : distanceErreur : nombre d'erreurs maximal autorisé
-         * @return : objet avec isValid (booléen) et motCorrige (mot corrigé)
-         */
-    
+    comparerMots(motJSON, motSaisi) {
         let compteur = 0;
         let motCorrige = "";
+    
+        // Instance unique de Lettre
+        const lettreMotSaisi = new Lettre();
+        const lettreMotJSON = new Lettre();
         // Comparaison caractère par caractère
         for (let i = 0; i < motSaisi.length; i++) {
-            // Récupération des coordonnées de la lettre dans la matrice clavier
-            var laLettre = new Lettre(motSaisi[i]);
-            const indiceX = laLettre.getCoordonnees(laLettre[0]);
-            const indiceY = laLettre.getCoordonnees(laLettre[1]);
-            const matrice = laLettre.getMatrice();
-            // Comparaison avec la matrice clavier
-            if (motSaisi[i] !== matrice[indiceX][indiceY] && motJSON[i] !== matrice[indiceX][indiceY]) {
-                for (let j = indiceX; j < matrice.length; j++) {
-                    for (let k = indiceY; k < matrice[j].length; k++) {
-                        //on regarde si les coordonnees de la lettre recupérée dans la matrice clavier sont les bonnes par rapport au mot saisi
-                        switch (matrice[indiceX][indiceY]) {
-                            case matrice[j + 1][k]:
+            if (motJSON[i] !== motSaisi[i]) {
+                // Mise à jour de l'instance avec la nouvelle lettre
+                lettreMotSaisi.setLettre(motSaisi[i]);
+                lettreMotJSON.setLettre(motJSON[i]);
+                const coordonnees = lettreMotSaisi.getCoordonnees();
+                const indiceX = coordonnees[0];
+                const indiceY = coordonnees[1];
+    
+    
+                // Comparaison avec la matrice clavier si les lettres sont différentes
+                    // Comparaison avec la matrice clavier
+                    const matrice = lettreMotSaisi.getMatrice();
+    
+                    // Déclaration de coordonnées à l'extérieur de la boucle for
+                    for (let j = 0; j < matrice.length; j++) {
+                        for (let k = 0; k < matrice[j].length; k++) {
+                            // Comparaison des coordonnées de la lettre récupérée dans la matrice clavier par rapport au mot saisi
+                            if (coordonnees[0] === j && coordonnees[1] === k) {
+                                // Si les coordonnées correspondent, utiliser le caractère actuel
+                                motCorrige += motJSON[i];
+                                console.log("ajout dans boucle de la lettre ", motJSON[i], " :", motCorrige);
                                 compteur++;
-                                motCorrige += matrice[j + 1][k];
-                                break;
-                            case matrice[j][k + 1]:
-                                compteur++;
-                                motCorrige += matrice[j][k + 1];
-                                break;
-                            case matrice[j + 1][k + 1]:
-                                compteur++;
-                                motCorrige += matrice[j + 1][k + 1];
-                                break;
-                            case matrice[j - 1][k]:
-                                compteur++;
-                                motCorrige+= matrice[j - 1][k];
-                                break;
-                            case matrice[j][k - 1]:
-                                compteur++;
-                                motCorrige += matrice[j][k - 1];
-                                break;
-                            case matrice[j - 1][k - 1]:
-                                compteur++;
-                                motCorrige += matrice[j - 1][k - 1];
-                                break;
-                            case matrice[j + 1][k - 1]:
-                                compteur++;
-                                motCorrige += matrice[j + 1][k - 1];
-                                break;
-                            case matrice[j - 1][k + 1]:
-                                compteur++;
-                                motCorrige += matrice[j - 1][k + 1];
-                                break;
-
-                            default:
-                                // Si la lettre n'est pas corrigée, utiliser le caractère actuel
-                                motCorrige += motSaisi[i];
-                                break;
+                            } else {
+                                var lettreMatrice = new Lettre(matrice[j][k]);
+                                // Si les coordonnées ne correspondent pas, vérifier les positions adjacentes dans la matrice clavier
+                                if (lettreMatrice.getCoordonnees()[0] === coordonnees[0] && lettreMatrice.getCoordonnees()[1] === coordonnees[1]) {
+                                    motCorrige += lettreMatrice.getCarac();
+                                }
+                            }
                         }
                     }
-                }
-    
-            // Si le compteur est supérieur ou égal à distanceErreur, sortir de la boucle
-            if (compteur > distanceErreur) {
-                break;
+            } else {
+                // Si les caractères sont identiques, incrémenter le compteur et ajouter le caractère au mot corrigé
+                motCorrige += motJSON[i];
+                console.log("ajout de la lettre car identique ", motJSON[i], " au mot ", motCorrige);
             }
         }
-    
         // Retourner un objet avec les résultats de la comparaison
-        return {
-            isValid: compteur < distanceErreur, // La comparaison est valide si le compteur est inférieur à distanceErreur
-            motCorrige: motCorrige,
-        };
+        return [compteur, motCorrige]
     }
-}
     
-
-    verifierCoherence(mot, motPertinant, tableau){
+    
+    verifierCoherence(listeDamarau, listeClavier){
         /**
-         * @param {string} mot - Mot saisi par l'utilisateur
-         * @param {string} motPertinant - Mot corrigé pertinent
-         * @param {Array} tableau - Tableau de mots pertinents
+         * @brief : methode qui permet de vérifier la cohérence entre les deux algorithmes
+         * @param : listeDamarau, listeClavier
          * @return {string} motLePlusPertinant - Mot le plus pertinent filtré par la saisie clavier et la distance de Damerau-Levenshtein
          */
     
         let motLePlusPertinant;
     
-        if (tableau.includes(motPertinant)) {
-            motLePlusPertinant = motPertinant;
-        } else {
-            // Mettez à jour motLePlusPertinant en utilisant la distance de Damerau-Levenshtein
-            motLePlusPertinant = this.damerauLevenshteinDistance(mot, motPertinant) < 2 ? motPertinant : null;
+        for (const motDamarau in listeDamarau) {
+            if (listeDamarau.hasOwnProperty(motDamarau)) {
+                for (const motClavier in listeClavier) {
+                    if (listeClavier.hasOwnProperty(motClavier)) {
+                        if(motDamarau === motClavier){
+                            motLePlusPertinant = motDamarau;
+                        }
+                    }
+                }
+            }
         }
     
         return motLePlusPertinant;
