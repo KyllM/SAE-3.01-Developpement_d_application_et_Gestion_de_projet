@@ -10,18 +10,7 @@
 import { Mot } from "./Mot.js";
 import { dictionnaireJSON } from "./Donnee.js";
 
-//------------------------------------
-//         méthode pour l'AJAX
-//------------------------------------
 
-function effectuerRequeteAjax(url) {
-    const xhttp = new XMLHttpRequest();
-    xhttp.onload = function () {
-        document.getElementById("resultat").innerHTML = this.responseText;
-    }
-    xhttp.open("GET", url);
-    xhttp.send();
-}
 
 //------------------------------------
 //              Main
@@ -38,7 +27,6 @@ class Main {
             console.log("---------------------------------------------");
     
             const formulaire = document.getElementById("demonstration-form");
-    
             formulaire.addEventListener("submit", async (event) => {
                 event.preventDefault();
                 const motElement = document.getElementById("mot");
@@ -75,6 +63,7 @@ class Main {
                         }
                     }                                     
                     
+                    console.log("---------------------------------------------------");
                     console.log("L'algorithme de Damerau-Levenshtein a fini de tourner");
                     console.log("---------------------------------------------------");
                     console.log("D'après l'algorithme de Damerau-Levenshtein, les mots suivants sont proches du mot saisi (avec une distance maximum de " + distanceSaisie+ " ):");
@@ -86,7 +75,32 @@ class Main {
                     /**
                      *              Algorithme de correction du clavier
                      **/
-                    const listeClavier = mot.corrigerClavier(distanceSaisie);
+
+                    const listeClavier = {};
+                    //parcours des valeurs                    
+                    // Parcourir les catégories du dictionnaire
+                    for (const categorie in dictionnaireValues) {
+                        if (dictionnaireValues.hasOwnProperty(categorie)) {
+                            // Parcourir les éléments de chaque catégorie
+                            for (const elementCategorie of dictionnaireValues[categorie]) {
+                                // Parcourir les propriétés de chaque élément
+                                for (const prop in elementCategorie) {
+                                    // Vérifier si la propriété est une chaîne de caractères
+                                    if (elementCategorie.hasOwnProperty(prop)) {
+                                        if (typeof elementCategorie[prop] === "string") {
+                                            listeClavier = mot.corrigerClavier(elementCategorie, distanceSaisie);
+                                            if (distance <=  distanceSaisie) {
+                                                listeMotAvecDamerauLevenshteinsteMot[elementCategorie[prop]] = distance;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } 
+
+
+                    console.log("---------------------------------------------------");
                     console.log("L'algorithme de correction du clavier a fini de tourner");
                     console.log("---------------------------------------------------");
                     console.log("D'après l'algorithme de correction du clavier, les mots suivants sont proches du mot saisi (avec une distance maximum de " + distanceSaisie+ " ):   ");

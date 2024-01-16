@@ -5,15 +5,16 @@
  * @date 2021-05-18
  */
 
-//declaration de la matrice clavier
-var matrice = [
-    ['&', 'é', '"', "'", '(', '-', 'è', '_', 'ç', 'à', ')'],
-    ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '^'],
-    ['q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'ù'],
-    ['w', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '!', '!']
-  ]
+//------------------------------------
+//      INCLUSION FICHIERS
+//------------------------------------
 
-export {matrice};
+import { Lettre } from "./Lettre.js";
+
+
+//------------------------------------
+//      FONCTION GLOBAL
+//------------------------------------
 
 //fonction pour récupérer les données du fichier JSON (GLOBAL)
 function recuperationJSON(cheminFichierJSON){
@@ -85,7 +86,7 @@ export class Donnee {
         throw new Error("La méthode 'damarauLevenshtein' doit être implémenté");
     };
 
-    corrigerClavier(){
+    corrigerClavier(distanceErreur){
         throw new Error("La méthode 'corrigerClavier' doit être implémenté"); 
     };
 }

@@ -7,8 +7,8 @@
  */
 
 //INCLUSION DES FICHIERS JS
-import {Donnee, matrice, dictionnaireJSON} from "./Donnee.js";
-
+import {Donnee, dictionnaireJSON} from "./Donnee.js";
+import {Lettre} from "./Lettre.js";
 
 //------------------------------------
 //      Classe Mot
@@ -105,25 +105,8 @@ export class Mot extends Donnee{
                 listeMotAvecDamerauLevenshteinsteMot.push(mot);
             }
     }*/
-
-    recupererCoordonnesLettre(lettre){
     
-        /**
-         * @brief : methode qui permet de recuperer les coordonnees d'une lettre dans la matrice clavier
-         * @param : lettre
-         * @return : coordonnees de la lettre dans la matrice clavier
-         */
-    
-            for(let i = 0; i< matrice.length; i++){
-                for(let j = 0; j< matrice[i].length; j++){
-                    if(matrice[i][j] == lettre){
-                        return [i,j];
-                    }
-                }
-            }
-    }
-    
-    corrigerClavier(distanceErreur) {
+    corrigerClavier(motJSON, distanceErreur) {
         /**
          * @brief : méthode qui permet de comparer un mot saisi au clavier
          *          et de renvoyer un mot corrigé avec un nombre d'erreurs inférieur à distanceErreur
@@ -135,23 +118,11 @@ export class Mot extends Donnee{
         let listePertinante = {}; // Tableau de mots corrigés
     
         // Parcours des catégories du dictionnaire
-        for (const categorie in dictionnaireJSON) {
-            if (dictionnaireJSON.hasOwnProperty(categorie)) {
-                // Parcours des éléments de chaque catégorie
-                for (const elementCategorie of dictionnaireJSON[categorie]) {
-                    // Comparaison avec le mot saisi
-                    if (elementCategorie.length === this.getTaille()) {
-                        const comparaison = this.comparerMots(elementCategorie, this.getDescription(), distanceErreur);
-    
-                        // Si la comparaison est valide, ajouter le mot corrigé à la liste
-                        if (comparaison.isValid) {
-                            listePertinante[elementCategorie] = comparaison.motCorrige;
-                        }
-                    }
-                }
-            }
+        const comparaison = this.comparerMots(motJSON, this.getDescription(), distanceErreur);
+        // Si la comparaison est valide, ajouter le mot corrigé à la liste
+        if (comparaison.isValid) {
+            listePertinante[motJSON] = comparaison.motCorrige;
         }
-    
         return listePertinante;
     }
     
@@ -166,13 +137,13 @@ export class Mot extends Donnee{
     
         let compteur = 0;
         let motCorrige = "";
-    
         // Comparaison caractère par caractère
         for (let i = 0; i < motSaisi.length; i++) {
             // Récupération des coordonnées de la lettre dans la matrice clavier
-            const indiceX = this.recupererCoordonnesLettre(motSaisi[i][0]);
-            const indiceY = this.recupererCoordonnesLettre(motSaisi[i][1]);
-    
+            var laLettre = new Lettre(motSaisi[i]);
+            const indiceX = laLettre.getCoordonnees(laLettre[0]);
+            const indiceY = laLettre.getCoordonnees(laLettre[1]);
+            const matrice = laLettre.getMatrice();
             // Comparaison avec la matrice clavier
             if (motSaisi[i] !== matrice[indiceX][indiceY] && motJSON[i] !== matrice[indiceX][indiceY]) {
                 for (let j = indiceX; j < matrice.length; j++) {
@@ -181,40 +152,40 @@ export class Mot extends Donnee{
                         switch (matrice[indiceX][indiceY]) {
                             case matrice[j + 1][k]:
                                 compteur++;
+                                motCorrige += matrice[j + 1][k];
                                 break;
-                                motCorrige.push(matrice[j + 1][k]);
                             case matrice[j][k + 1]:
                                 compteur++;
-                                motCorrige.push(matrice[j][k + 1]);
+                                motCorrige += matrice[j][k + 1];
                                 break;
                             case matrice[j + 1][k + 1]:
                                 compteur++;
-                                motCorrige.push(matrice[j + 1][k + 1]);
+                                motCorrige += matrice[j + 1][k + 1];
                                 break;
                             case matrice[j - 1][k]:
                                 compteur++;
-                                motCorrige.push(matrice[j - 1][k]);
+                                motCorrige+= matrice[j - 1][k];
                                 break;
                             case matrice[j][k - 1]:
                                 compteur++;
-                                motCorrige.push(matrice[j][k - 1]);
+                                motCorrige += matrice[j][k - 1];
                                 break;
                             case matrice[j - 1][k - 1]:
                                 compteur++;
-                                motCorrige.push(matrice[j - 1][k - 1]);
+                                motCorrige += matrice[j - 1][k - 1];
                                 break;
                             case matrice[j + 1][k - 1]:
                                 compteur++;
-                                motCorrige.push(matrice[j + 1][k - 1]);
+                                motCorrige += matrice[j + 1][k - 1];
                                 break;
                             case matrice[j - 1][k + 1]:
                                 compteur++;
-                                motCorrige.push(matrice[j - 1][k + 1]);
+                                motCorrige += matrice[j - 1][k + 1];
                                 break;
 
                             default:
                                 // Si la lettre n'est pas corrigée, utiliser le caractère actuel
-                                motCorrige.push(motSaisi[i]);
+                                motCorrige += motSaisi[i];
                                 break;
                         }
                     }

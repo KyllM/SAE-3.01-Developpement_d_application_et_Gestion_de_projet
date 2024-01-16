@@ -3,83 +3,84 @@
  * @module Lettre
  */
 
-//INCLUSION DES FICHIERS JS
-//import {} from "./fichier.js";
+//------------------------------------
+//      Variable Global
+//------------------------------------
 
+const TAILLE_X = 11; // Taille de la matrice en x
+const TAILLE_Y = 4; // Taille de la matrice en y
 
 //------------------------------------
 //      Classe Lettre
 //------------------------------------
 
-export class Lettre { // extends ?{
+export class Lettre {
 
     // ATTRIBUTS
     carac; // Caractère de la lettre
     coordonnees; // Coordonnées de la lettre dans la matrice
-
+    matrice; // Matrice clavier
 
     // CONSTRUCTEUR
     /**
      * @brief constructeur de la classe Lettre
-     * @param {*} valeur 
-     * @param {*} coordonnees
+     * @param {*} lettre - Caractère de la lettre
      */
     constructor(lettre) {
         // Attributs encapsulés
         this.carac = lettre;
-        this.coordonnees = this.recupererCoordonnees();
+        this.matrice = this.initialiserMatrice();
+        this.coordonnees = this.getCoordonnees(lettre);
     }
 
-
-
-     // ENCAPSULATION
+    // ENCAPSULATION
     /**
-     * @brief get&set des attributs  carac, coordonnees
+     * @brief get&set des attributs carac, coordonnees
      */
 
-    get carac() {
+    getCarac() {
         return this.carac;
     }
 
-    set carac(nouveauCarac) {
+    setCarac(nouveauCarac) {
         this.carac = nouveauCarac;
     }
 
-    get coordonnees() {
+    getDistance(uneLettre) {
+        return Math.abs(this.coordonnees[0] - uneLettre.coordonnees[0]) + Math.abs(this.coordonnees[1] - uneLettre.coordonnees[1]);
+    }
+
+    getMatrice() {
+        return this.matrice;
+    }
+
+    getTypeMatrice() { 
+        return this.typeMatrice;
+    }
+
+    // Méthode pour initialiser la matrice clavier
+    initialiserMatrice() {
+        // Création de la matrice clavier
+        const matrice = [
+            ['&', 'é', '"', "'", '(', '-', 'è', '_', 'ç', 'à', ')'],
+            ['a', 'z', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '^'],
+            ['q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'ù'],
+            ['w', 'x', 'c', 'v', 'b', 'n', ',', ';', ':', '!', '!']
+        ];
+
+        // Initialisation des coordonnées
+        for (let i = 0; i < TAILLE_X; i++) {
+            for (let j = 0; j < TAILLE_Y; j++) {
+                this.coordonnees = [i, j];
+            }
+        }
+
+        return matrice;
+    }
+
+    // Méthode pour récupérer les coordonnées de la lettre dans la matrice clavier
+    getCoordonnees(lettre) {
         return this.coordonnees;
     }
 
-
-
-
-
-    // Méthode pour récupérer les coordonnées de la lettre dans la matrice clavier
-    recupererCoordonnees() {
-        for (let i = 0; i < matrice.length; i++) {
-            for (let j = 0; j < matrice[i].length; j++) {
-                if (matrice[i][j].carac === this.carac) {
-                    return [i, j];
-                }
-            }
-        }
-    }
-
-
-
-    matrice = [
-        [new Lettre('&'), new Lettre('é'), new Lettre('"'), new Lettre("'"), new Lettre('('), new Lettre('-'), new Lettre('è'), new Lettre('_'), new Lettre('ç'), new Lettre('à'), new Lettre(')')],
-        [new Lettre('a'), new Lettre('z'), new Lettre('e'), new Lettre('r'), new Lettre('t'), new Lettre('y'), new Lettre('u'), new Lettre('i'), new Lettre('o'), new Lettre('p'), new Lettre('^')],
-        [new Lettre('q'), new Lettre('s'), new Lettre('d'), new Lettre('f'), new Lettre('g'), new Lettre('h'), new Lettre('j'), new Lettre('k'), new Lettre('l'), new Lettre('m'), new Lettre('ù')],
-        [new Lettre('w'), new Lettre('x'), new Lettre('c'), new Lettre('v'), new Lettre('b'), new Lettre('n'), new Lettre(','), new Lettre(';'), new Lettre(':'), new Lettre('!'), new Lettre('!')]
-    ];
-
 }
-
-
-
-    //METHODES SPECIFIQUES
-
-
-
-
-
