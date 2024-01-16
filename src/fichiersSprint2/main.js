@@ -57,15 +57,15 @@ class Main {
                     for (const categorie in dictionnaireValues) {
                         if (dictionnaireValues.hasOwnProperty(categorie)) {
                             // Parcourir les éléments de chaque catégorie
-                            for (const elementCat of dictionnaireValues[categorie]) {
+                            for (const elementCategorie of dictionnaireValues[categorie]) {
                                 // Parcourir les propriétés de chaque élément
-                                for (const prop in elementCat) {
+                                for (const prop in elementCategorie) {
                                     // Vérifier si la propriété est une chaîne de caractères
-                                    if (elementCat.hasOwnProperty(prop)) {
-                                        if (typeof elementCat[prop] === "string") {
-                                            const distance = await mot.damerauLevenshteinDistance(elementCat[prop], mot.getDescription());
+                                    if (elementCategorie.hasOwnProperty(prop)) {
+                                        if (typeof elementCategorie[prop] === "string") {
+                                            const distance = await mot.damerauLevenshteinDistance(elementCategorie[prop], mot.getDescription());
                                             if (distance < 2) {
-                                                listeMotAvecDamerauLevenshteinsteMot[elementCat[prop]] = distance;
+                                                listeMotAvecDamerauLevenshteinsteMot[elementCategorie[prop]] = distance;
                                             }
                                         }
                                     }
