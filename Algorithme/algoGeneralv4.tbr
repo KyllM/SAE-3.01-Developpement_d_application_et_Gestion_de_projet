@@ -2,7 +2,7 @@
 <!DOCTYPE Tabula_Rasa>
 <Algorithme>
   <nom>algoGeneral</nom>
-  <date_creation>11/1/2024 10:32</date_creation>
+  <date_creation>17/1/2024 11:33</date_creation>
   <Elements>
     <Action>
       <Position>654;44</Position>
@@ -22,19 +22,6 @@ ensembleMots</PostAssertion>
           <Titre>Initialisation</Titre>
           <DetailsVisible>1</DetailsVisible>
           <DetailsVideVisible>0</DetailsVideVisible>
-          <Enfants/>
-        </Action>
-        <Action>
-          <Position>193;252</Position>
-          <StyleLien>1</StyleLien>
-          <PreAssertion>mot, dictionnaireJSON</PreAssertion>
-          <PostAssertion>listeMotAvecDamerauLevenshtein</PostAssertion>
-          <Titre>Obtenir l'ensemble des &#xd;
-mots ayant une distance&#xd;
-(Damerau-Levenshtein) de &#xd;
-la longueur de mot / 4 + 1</Titre>
-          <DetailsVisible>1</DetailsVisible>
-          <DetailsVideVisible>1</DetailsVideVisible>
           <Enfants/>
         </Action>
         <Action>
@@ -59,7 +46,7 @@ la longueur de mot / 4 + 1</Titre>
           </Enfants>
         </Action>
         <Action>
-          <Position>573;364</Position>
+          <Position>714;271</Position>
           <StyleLien>2</StyleLien>
           <PreAssertion>mot, matrice, dictionnaireJSON</PreAssertion>
           <PostAssertion>listePertinante</PostAssertion>
@@ -67,16 +54,24 @@ la longueur de mot / 4 + 1</Titre>
           <DetailsVisible>1</DetailsVisible>
           <DetailsVideVisible>1</DetailsVideVisible>
           <Enfants>
-            <Procedure>
-              <Position>606;444</Position>
+            <Iteration>
+              <Position>942.5;375.5</Position>
               <StyleLien>1</StyleLien>
-              <PreAssertion>mot, matrice, dictionnaireJSON</PreAssertion>
-              <PostAssertion>listePertinante</PostAssertion>
-              <Titre>corrigerClavier</Titre>
-              <DetailsVisible>1</DetailsVisible>
-              <DetailsVideVisible>1</DetailsVideVisible>
-              <Enfants/>
-            </Procedure>
+              <Titre>pour i allant de 0 à dictionnaireJSON.length</Titre>
+              <IterationFixe>1</IterationFixe>
+              <Enfants>
+                <Procedure>
+                  <Position>748;544</Position>
+                  <StyleLien>1</StyleLien>
+                  <PreAssertion>mot, matrice, dictionnaireJSON</PreAssertion>
+                  <PostAssertion>listePertinante</PostAssertion>
+                  <Titre>corrigerClavier</Titre>
+                  <DetailsVisible>1</DetailsVisible>
+                  <DetailsVideVisible>1</DetailsVideVisible>
+                  <Enfants/>
+                </Procedure>
+              </Enfants>
+            </Iteration>
           </Enfants>
         </Action>
         <Action>
@@ -89,6 +84,38 @@ listeMotAvecDamerauLevenshtein</PreAssertion>
           <DetailsVisible>1</DetailsVisible>
           <DetailsVideVisible>1</DetailsVideVisible>
           <Enfants/>
+        </Action>
+        <Action>
+          <Position>78;278</Position>
+          <StyleLien>2</StyleLien>
+          <PreAssertion>mot, dictionnaireJSON</PreAssertion>
+          <PostAssertion>listeMotAvecDamerauLevenshtein</PostAssertion>
+          <Titre>Obtenir l'ensemble des &#xd;
+mots ayant une distance&#xd;
+(Damerau-Levenshtein) de &#xd;
+la longueur de mot / 4 + 1</Titre>
+          <DetailsVisible>1</DetailsVisible>
+          <DetailsVideVisible>1</DetailsVideVisible>
+          <Enfants>
+            <Iteration>
+              <Position>348.5;376.5</Position>
+              <StyleLien>1</StyleLien>
+              <Titre>pour i allant de 0 à dictionnaireJSON.length</Titre>
+              <IterationFixe>1</IterationFixe>
+              <Enfants>
+                <Procedure>
+                  <Position>67;518</Position>
+                  <StyleLien>1</StyleLien>
+                  <PreAssertion>mot, dictionnaireJSON[i]</PreAssertion>
+                  <PostAssertion>listeDamarauLevenshtein</PostAssertion>
+                  <Titre>damerauLevenshteinDistance(</Titre>
+                  <DetailsVisible>1</DetailsVisible>
+                  <DetailsVideVisible>1</DetailsVideVisible>
+                  <Enfants/>
+                </Procedure>
+              </Enfants>
+            </Iteration>
+          </Enfants>
         </Action>
       </Enfants>
     </Action>
