@@ -1,0 +1,74 @@
+{
+    "GenreMusicale" : [
+    {
+        "nomGenre" : "classique",
+        "caractereMusicale" : ["doux", "calme", "reposant"],
+        "anneeApparition" : 1600
+    },
+    {
+        "nomGenre" : "rock",
+        "caractereMusicale" : ["fort", "rythmé", "énergique"],
+        "anneeApparition" : 1950
+    }
+    ],
+    "Titre" : [
+    {
+        "nomTitre" : "Stairway to heaven",
+        "artiste" : "Led Zeppelin",
+        "annee" : 1971,
+        "genre" : "rock"
+    },
+    {
+        "nomTitre" : "Canon en ré majeur",
+        "artiste" : "Johann Pachelbel",
+        "annee" : 1680,
+        "genre" : "classique"
+    }
+    ],
+    "Artiste" : [
+    {
+        "nomArtiste" : "Led Zeppelin",
+        "anneeDebut" : 1968,
+        "genre" : "rock"
+    },
+    {
+        "nomArtiste" : "Johann Pachelbel",
+        "anneeDebut" : 1653,
+        "genre" : "classique"
+    }
+    ], 
+    "Tag" : [
+    {
+        "nomTag" : "rock",
+        "description" : "musique rythmée"
+    },
+    {
+        "nomTag" : "classique",
+        "description" : "musique douce"
+    },
+    {
+        "nomTag" : "jazz",
+        "description" : "musique de jazz"
+    }
+    ], 
+    "Vinyle" : [
+    {
+        "nomVinyle" : "Stairway to heaven",
+        "artiste" : "Led Zeppelin",
+        "annee" : 1971,
+        "genre" : "rock",
+        "prix" : 10,
+        "description" : "musique rythmée",
+        "image" : "image-jpg"
+    },
+    {
+        "nomVinyle" : "Canon en ré majeur",
+        "artiste" : "Johann Pachelbel",
+        "annee" : 1680,
+        "genre" : "classique",
+        "prix" : 10,
+        "description" : "musique douce",
+        "image" : "canon-re-majeur-pechelbel-jpg"
+    }
+    ]
+}
