@@ -126,7 +126,6 @@ class Main {
                     //affichage dans le navigateur
                     var motLePlusPertinant = mot.verifierCoherence(listeMotAvecDamerauLevenshteinsteMot, listeMotCorrige);
                     console.log("motLePlusPertinant :", motLePlusPertinant);
-                    console.log(typeof motLePlusPertinant);
                     if(typeof motLePlusPertinant === "object"){
                         this.afficherResultatsCoherenceObjet(motLePlusPertinant, maximumDistance);
                     }

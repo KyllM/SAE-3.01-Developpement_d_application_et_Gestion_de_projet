@@ -201,6 +201,9 @@ export class Mot extends Donnee{
         const minClavier = Math.min(...valeurClavier);
         const minDamarau = Math.min(...valeurDamarau);
         
+        console.log("minClavier : ", minClavier);
+        console.log("minDamarau : ", minDamarau);
+
 
         if (minClavier < minDamarau) {
             for (let cle in listeClavier) {
@@ -225,6 +228,7 @@ export class Mot extends Donnee{
               objetsIdentiques[cle] = listeClavier[cle];
             }
           }
+          console.log("objets identiques : ", objetsIdentiques);
           return objetsIdentiques;
         }
     }
