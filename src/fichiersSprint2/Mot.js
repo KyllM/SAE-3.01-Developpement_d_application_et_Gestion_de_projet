@@ -127,14 +127,14 @@ export class Mot extends Donnee{
         let listePertinante = {}; // Tableau de mots corrigés
     
         // Parcours des catégories du dictionnaire
-        const comparaison = this.comparerMots(motJSON, motSaisie);
+        const comparaison = this.comparerMots(motJSON, motSaisie, distanceErreur);
     
         // Si la comparaison est valide, ajouter le mot corrigé à la liste
         return comparaison;
 
     }
     
-    comparerMots(motJSON, motSaisi) {
+    comparerMots(motJSON, motSaisi, distanceErreur) {
         let compteur = 0;
         let motCorrige = "";
     
@@ -161,6 +161,7 @@ export class Mot extends Donnee{
                         for (let k = 0; k < matrice[j].length; k++) {
                             // Comparaison des coordonnées de la lettre récupérée dans la matrice clavier par rapport au mot saisi
                             if (coordonnees[0] === j && coordonnees[1] === k) {
+                                console.log(lettreMotJSON.getDistance(lettreMotSaisi));
                                 // Si les coordonnées correspondent, utiliser le caractère actuel
                                 motCorrige += motJSON[i];
                                 console.log("ajout dans boucle de la lettre ", motJSON[i], " :", motCorrige);
@@ -180,8 +181,13 @@ export class Mot extends Donnee{
                 console.log("ajout de la lettre car identique ", motJSON[i], " au mot ", motCorrige);
             }
         }
-        // Retourner un objet avec les résultats de la comparaison
-        return [compteur, motCorrige]
+        if(compteur <= distanceErreur){
+            // Retourner un objet avec les résultats de la comparaison
+            return [compteur, motCorrige]
+        }
+        else{
+            return [motSaisi.length + 1, ""];
+        }
     }
     
     
@@ -192,24 +198,31 @@ export class Mot extends Donnee{
          * @return {string|object} motLePlusPertinant - Clé ayant la plus petite valeur ou objet contenant toutes les valeurs
          */
     
-        const clesClavier = Object.keys(listeClavier);
-        const clesDamarau = Object.keys(listeDamarau);
+        var clesClavier = Object.keys(listeClavier);
+        var clesDamarau = Object.keys(listeDamarau);
     
-        const valeursClavier = Object.values(listeClavier);
-        const valeursDamarau = Object.values(listeDamarau);
+        var valeursClavier = Object.values(listeClavier);
+        var valeursDamarau = Object.values(listeDamarau);
     
-        if (valeursClavier.length === 0 || valeursDamarau.length === 0) {
-            // Si l'une des listes est vide, renvoyer un objet vide
-            return {};
+        if (valeursClavier.length !== 0) {
+            var minValeurClavier = Math.min(...valeursClavier);
+            var minCleClavier = clesClavier[valeursClavier.indexOf(minValeurClavier)];
+        }
+        else{
+            minCleClavier = "";
+            minValeurClavier = this.getDescription().length + 1;   
+        }
+
+        if(valeursDamarau.length !== 0){
+            var minValeurDamarau = Math.min(...valeursDamarau);
+            var minCleDamarau = clesDamarau[valeursDamarau.indexOf(minValeurDamarau)];
+        }
+        else{
+            minCleDamarau = "";
+            minValeurDamarau = this.getDescription().length + 1;
         }
     
-        const minValeurClavier = Math.min(...valeursClavier);
-        const minValeurDamarau = Math.min(...valeursDamarau);
-    
-        const minCleClavier = clesClavier[valeursClavier.indexOf(minValeurClavier)];
-        const minCleDamarau = clesDamarau[valeursDamarau.indexOf(minValeurDamarau)];
-        
-        if(minCleClavier.length === this.getDescription().length && minCleDamarau.length === this.getDescription().length){
+        if((minCleClavier.length === this.getDescription().length && minCleDamarau.length === this.getDescription().length && minCleClavier !== minCleDamarau) === true){
             return fusionnerSansDoublons(listeClavier, listeDamarau);
         }
 
