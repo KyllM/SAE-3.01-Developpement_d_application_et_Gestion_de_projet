@@ -63,7 +63,7 @@ function recuperationJSON(cheminFichierJSON){
         });
 }
 
-let cheminFichierJSON = "./fichiersSprint2/donnees.json";
+let cheminFichierJSON = "./donnees.json";
 let dictionnaireJSON = await recuperationJSON(cheminFichierJSON);
 export {dictionnaireJSON};
 
