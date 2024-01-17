@@ -154,7 +154,7 @@ class Main {
             resultatElement.innerHTML += `<p> Le resultat de l'algorithme de correction clavier est (avec une distance de ${distanceSaisieClavier}): </p> <br>`;
             for (const [mot, distance] of Object.entries(listeClavier)) {
                 if(distance <= distanceSaisieClavier){
-                    resultatElement.innerHTML += `<p>${mot} avec une distance ${distance} d'erreurs</p>`;
+                    resultatElement.innerHTML += `<p>${mot} avec une distance maximum d'erreurs de ${distance} </p>`;
                 }
             }
             resultatElement.innerHTML += `<p> Il s'agit des résultats contenu dans le JSON </p> <br>`;
@@ -167,7 +167,7 @@ class Main {
             for (const [mot, distance] of Object.entries(motLePlusPertinant)) {
                 console.log(mot, distance);
                 if(distance <= distanceSaisie){
-                    resultatElement.innerHTML += `<p>${mot} avec une distance ${distance} d'erreurs</p>`;
+                    resultatElement.innerHTML += `<p>${mot} avec une distance maximum d'erreurs de ${distance}</p>`;
                 }
             }
         }

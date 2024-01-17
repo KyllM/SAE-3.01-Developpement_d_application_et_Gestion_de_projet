@@ -165,7 +165,7 @@ export class Mot extends Donnee{
                                 // Si les coordonnées correspondent, utiliser le caractère actuel
                                 motCorrige += motJSON[i];
                                 console.log("ajout dans boucle de la lettre ", motJSON[i], " :", motCorrige);
-                                compteur++;
+                                compteur+= lettreMotJSON.getDistance(lettreMotSaisi);
                             } else {
                                 var lettreMatrice = new Lettre(matrice[j][k]);
                                 // Si les coordonnées ne correspondent pas, vérifier les positions adjacentes dans la matrice clavier
@@ -181,13 +181,7 @@ export class Mot extends Donnee{
                 console.log("ajout de la lettre car identique ", motJSON[i], " au mot ", motCorrige);
             }
         }
-        if(compteur <= distanceErreur){
-            // Retourner un objet avec les résultats de la comparaison
-            return [compteur, motCorrige]
-        }
-        else{
-            return [motSaisi.length + 1, ""];
-        }
+        return [compteur, motCorrige];
     }
     
     
@@ -198,41 +192,41 @@ export class Mot extends Donnee{
          * @return {string|object} motLePlusPertinant - Clé ayant la plus petite valeur ou objet contenant toutes les valeurs
          */
     
-        var clesClavier = Object.keys(listeClavier);
-        var clesDamarau = Object.keys(listeDamarau);
-    
-        var valeursClavier = Object.values(listeClavier);
-        var valeursDamarau = Object.values(listeDamarau);
-    
-        if (valeursClavier.length !== 0) {
-            var minValeurClavier = Math.min(...valeursClavier);
-            var minCleClavier = clesClavier[valeursClavier.indexOf(minValeurClavier)];
-        }
-        else{
-            minCleClavier = "";
-            minValeurClavier = this.getDescription().length + 1;   
-        }
+        const clesClavier = Object.keys(listeClavier);
+        const clesDamarau = Object.keys(listeDamarau);
+        
+        const valeurClavier = Object.values(listeClavier);
+        const valeurDamarau = Object.values(listeDamarau);
 
-        if(valeursDamarau.length !== 0){
-            var minValeurDamarau = Math.min(...valeursDamarau);
-            var minCleDamarau = clesDamarau[valeursDamarau.indexOf(minValeurDamarau)];
-        }
-        else{
-            minCleDamarau = "";
-            minValeurDamarau = this.getDescription().length + 1;
-        }
-    
-        if((minCleClavier.length === this.getDescription().length && minCleDamarau.length === this.getDescription().length && minCleClavier !== minCleDamarau) === true){
-            return fusionnerSansDoublons(listeClavier, listeDamarau);
-        }
+        const minClavier = Math.min(...valeurClavier);
+        const minDamarau = Math.min(...valeurDamarau);
+        
 
-        if (minValeurClavier === minValeurDamarau && minCleClavier !== minCleDamarau) {
-            // Si aucune valeur minimale n'est trouvée, renvoyer un objet contenant toutes les valeurs
-            return fusionnerSansDoublons(listeClavier, listeDamarau);
+        if (minClavier < minDamarau) {
+            for (let cle in listeClavier) {
+                // Vérifier si la valeur correspond à celle recherchée
+                if (listeClavier.hasOwnProperty(cle) && listeClavier[cle] === minClavier) {
+                  // Retourner la clé si la valeur est trouvée
+                  return cle;
+                }
+              }
+        } else if (minClavier > minDamarau) {
+            for (let cle in listeDamarau) {
+                // Vérifier si la valeur correspond à celle recherchée
+                if (listeDamarau.hasOwnProperty(cle) && listeDamarau[cle] === minDamarau) {
+                  // Retourner la clé si la valeur est trouvée
+                  return cle;
+                }
+            }
+        } else {
+          const objetsIdentiques = {};
+          for (const cle of clesClavier) {
+            if (listeClavier[cle] === listeDamarau[cle]) {
+              objetsIdentiques[cle] = listeClavier[cle];
+            }
+          }
+          return objetsIdentiques;
         }
-    
-        return minValeurClavier < minValeurDamarau ? minCleClavier : minCleDamarau;
     }
     
-        
 }
