@@ -4,6 +4,8 @@
  * @version 1.1
  * @date 2024-01-15
  * @author MaxMontouro 
+ * @see {@link https://github.com/KyllM/SAE-3.01-Developpement_d_application_et_Gestion_de_projet}
+ * @see {@link Donnee.js.html}
  */
 
 //INCLUSION DES FICHIERS JS
@@ -140,11 +142,11 @@ class Main {
         afficherResultatsDamarau(listeMotAvecDamerauLevenshteinsteMot, distanceSaisie) {
             const resultatElement = document.getElementById("resultatDamarau");
             resultatElement.innerHTML = "";
+            resultatElement.innerHTML += `<p> Il s'agit des résultats contenu dans le JSON </p> <br>`;
             resultatElement.innerHTML += `<p> Le resultat de l'algorithme de damarau-levenshtein est (avec une distance de ${distanceSaisie}): </p> <br>`;
             for (const [mot, distance] of Object.entries(listeMotAvecDamerauLevenshteinsteMot)) {
                 resultatElement.innerHTML += `<p>${mot} avec une distance  ${distance} d'erreurs</p>`;
-            }
-            resultatElement.innerHTML += `<p> Il s'agit des résultats contenu dans le JSON </p> <br>`;
+            } 
         }
 
         afficherResultatsClavier(listeClavier, distanceSaisieClavier) {
@@ -156,7 +158,6 @@ class Main {
                     resultatElement.innerHTML += `<p>${mot} avec une distance maximum d'erreurs de ${distance} </p>`;
                 }
             }
-            resultatElement.innerHTML += `<p> Il s'agit des résultats contenu dans le JSON </p> <br>`;
         }
 
         afficherResultatsCoherenceObjet(motLePlusPertinant, distanceSaisie) {
@@ -174,8 +175,7 @@ class Main {
             const resultatElement = document.getElementById("resultatCoherence");
             resultatElement.innerHTML = "";
             resultatElement.innerHTML += `<p> Le resultat de l'algorithme de cohérence est : </p> <br>`;
-            resultatElement.innerHTML += `<p>${motLePlusPertinant} avec une distance maximum d'erreurs de ${distanceSaisie} </p>`;
-            resultatElement.innerHTML += `<p> Il s'agit des résultats contenu dans le JSON </p> <br>`;
+            resultatElement.innerHTML += `<p>${motLePlusPertinant} semble être le mot le plus pertinant <br> (limite maximale d'erreur de ${distanceSaisie}) </p>`;
         }
 }
 

@@ -2,7 +2,7 @@
 <!DOCTYPE Tabula_Rasa>
 <Algorithme>
   <nom>algoGeneral</nom>
-  <date_creation>17/1/2024 11:33</date_creation>
+  <date_creation>17/1/2024 11:38</date_creation>
   <Elements>
     <Action>
       <Position>654;44</Position>
@@ -27,7 +27,7 @@ ensembleMots</PostAssertion>
         <Action>
           <Position>1457;200</Position>
           <StyleLien>2</StyleLien>
-          <PreAssertion>motCorrige</PreAssertion>
+          <PreAssertion>motLePlusPertinant</PreAssertion>
           <PostAssertion>?</PostAssertion>
           <Titre>retour</Titre>
           <DetailsVisible>1</DetailsVisible>
@@ -49,22 +49,22 @@ ensembleMots</PostAssertion>
           <Position>714;271</Position>
           <StyleLien>2</StyleLien>
           <PreAssertion>mot, matrice, dictionnaireJSON</PreAssertion>
-          <PostAssertion>listePertinante</PostAssertion>
+          <PostAssertion>listeClavier</PostAssertion>
           <Titre>obtenir le mot le plus probable par rapport à la saisie clavier avec au plus 2 erreurs</Titre>
           <DetailsVisible>1</DetailsVisible>
           <DetailsVideVisible>1</DetailsVideVisible>
           <Enfants>
             <Iteration>
-              <Position>942.5;375.5</Position>
+              <Position>986.5;361.5</Position>
               <StyleLien>1</StyleLien>
               <Titre>pour i allant de 0 à dictionnaireJSON.length</Titre>
               <IterationFixe>1</IterationFixe>
               <Enfants>
                 <Procedure>
-                  <Position>748;544</Position>
+                  <Position>746;512</Position>
                   <StyleLien>1</StyleLien>
-                  <PreAssertion>mot, matrice, dictionnaireJSON</PreAssertion>
-                  <PostAssertion>listePertinante</PostAssertion>
+                  <PreAssertion>mot, dictionnaireJSON</PreAssertion>
+                  <PostAssertion>listeClavier</PostAssertion>
                   <Titre>corrigerClavier</Titre>
                   <DetailsVisible>1</DetailsVisible>
                   <DetailsVideVisible>1</DetailsVideVisible>
@@ -77,9 +77,9 @@ ensembleMots</PostAssertion>
         <Action>
           <Position>1125;443</Position>
           <StyleLien>1</StyleLien>
-          <PreAssertion>listePertinante,
+          <PreAssertion>listeClavier,
 listeMotAvecDamerauLevenshtein</PreAssertion>
-          <PostAssertion>motLesPlusPertinants</PostAssertion>
+          <PostAssertion>motLePlusPertinant</PostAssertion>
           <Titre>Verifier cohérence entre damarau-levenshtein et saisie clavier</Titre>
           <DetailsVisible>1</DetailsVisible>
           <DetailsVideVisible>1</DetailsVideVisible>
