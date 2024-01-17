@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Mot.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Mot.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview  Fichier contenant la classe Mot
  * @version 1.0
  * @since 2021-05-18
@@ -23,7 +51,7 @@ function fusionnerSansDoublons(objet1, objet2) {
 
     // Fusionner les clés de l'objet2 qui ne sont pas déjà présentes dans l'objet1
     for (const cle in objet2) {
-        if (objet2.hasOwnProperty(cle) && !objet1.hasOwnProperty(cle)) {
+        if (objet2.hasOwnProperty(cle) &amp;&amp; !objet1.hasOwnProperty(cle)) {
             resultat[cle] = objet2[cle];
         }
     }
@@ -56,7 +84,7 @@ export class Mot extends Donnee{
     //ENCAPSULATION
     /**
      * 
-     * @brief get&set des attributs  nom, mot, ArrayDonnee
+     * @brief get&amp;set des attributs  nom, mot, ArrayDonnee
      */
 
     /**
@@ -104,16 +132,16 @@ export class Mot extends Donnee{
             const longueur2 = str2.length;
             const tableau= Array(longueur1 + 1).fill(null).map(() => Array(longueur2 + 1).fill(null)); //  crée une matrice vide avec des dimensions longueur1 + 1 x longueur2 + 1
     
-            for (let i = 0; i <= longueur1; i++) {
+            for (let i = 0; i &lt;= longueur1; i++) {
                 tableau[i][0] = i;
             }
     
-            for (let j = 0; j <= longueur2; j++) {
+            for (let j = 0; j &lt;= longueur2; j++) {
                 tableau[0][j] = j;
             }
     
-            for (let i = 1; i <= longueur1; i++) {
-                for (let j = 1; j <= longueur2; j++) {
+            for (let i = 1; i &lt;= longueur1; i++) {
+                for (let j = 1; j &lt;= longueur2; j++) {
                     
                     let coutSubstitution=0;
     
@@ -130,7 +158,7 @@ export class Mot extends Donnee{
                         tableau[i - 1][j - 1] + coutSubstitution // Substitution
                     );
     
-                    if (i > 1 && j > 1 && str1[i - 1] === str2[j - 2] && str1[i - 2] === str2[j - 1]) {
+                    if (i > 1 &amp;&amp; j > 1 &amp;&amp; str1[i - 1] === str2[j - 2] &amp;&amp; str1[i - 2] === str2[j - 1]) {
                         tableau[i][j] = Math.min(tableau[i][j], tableau[i - 2][j - 2] + coutSubstitution); // Transposition
                     }
                 }
@@ -171,7 +199,7 @@ export class Mot extends Donnee{
         const lettreMotSaisi = new Lettre();
         const lettreMotJSON = new Lettre();
         // Comparaison caractère par caractère
-        for (let i = 0; i < motSaisi.length; i++) {
+        for (let i = 0; i &lt; motSaisi.length; i++) {
             if (motJSON[i] !== motSaisi[i]) {
                 // Mise à jour de l'instance avec la nouvelle lettre
                 lettreMotSaisi.setLettre(motSaisi[i]);
@@ -186,10 +214,10 @@ export class Mot extends Donnee{
                     const matrice = lettreMotSaisi.getMatrice();
     
                     // Déclaration de coordonnées à l'extérieur de la boucle for
-                    for (let j = 0; j < matrice.length; j++) {
-                        for (let k = 0; k < matrice[j].length; k++) {
+                    for (let j = 0; j &lt; matrice.length; j++) {
+                        for (let k = 0; k &lt; matrice[j].length; k++) {
                             // Comparaison des coordonnées de la lettre récupérée dans la matrice clavier par rapport au mot saisi
-                            if (coordonnees[0] === j && coordonnees[1] === k) {
+                            if (coordonnees[0] === j &amp;&amp; coordonnees[1] === k) {
                                 console.log(lettreMotJSON.getDistance(lettreMotSaisi));
                                 // Si les coordonnées correspondent, utiliser le caractère actuel
                                 motCorrige += motJSON[i];
@@ -198,7 +226,7 @@ export class Mot extends Donnee{
                             } else {
                                 var lettreMatrice = new Lettre(matrice[j][k]);
                                 // Si les coordonnées ne correspondent pas, vérifier les positions adjacentes dans la matrice clavier
-                                if (lettreMatrice.getCoordonnees()[0] === coordonnees[0] && lettreMatrice.getCoordonnees()[1] === coordonnees[1]) {
+                                if (lettreMatrice.getCoordonnees()[0] === coordonnees[0] &amp;&amp; lettreMatrice.getCoordonnees()[1] === coordonnees[1]) {
                                     motCorrige += lettreMatrice.getCarac();
                                 }
                             }
@@ -239,10 +267,10 @@ export class Mot extends Donnee{
         console.log("minDamarau : ", minDamarau);
 
 
-        if (minClavier < minDamarau) {
+        if (minClavier &lt; minDamarau) {
             for (let cle in listeClavier) {
                 // Vérifier si la valeur correspond à celle recherchée
-                if (listeClavier.hasOwnProperty(cle) && listeClavier[cle] === minClavier) {
+                if (listeClavier.hasOwnProperty(cle) &amp;&amp; listeClavier[cle] === minClavier) {
                   // Retourner la clé si la valeur est trouvée
                   return cle;
                 }
@@ -250,7 +278,7 @@ export class Mot extends Donnee{
         } else if (minClavier > minDamarau) {
             for (let cle in listeDamarau) {
                 // Vérifier si la valeur correspond à celle recherchée
-                if (listeDamarau.hasOwnProperty(cle) && listeDamarau[cle] === minDamarau) {
+                if (listeDamarau.hasOwnProperty(cle) &amp;&amp; listeDamarau[cle] === minDamarau) {
                   // Retourner la clé si la valeur est trouvée
                   return cle;
                 }
@@ -267,4 +295,26 @@ export class Mot extends Donnee{
         }
     }
     
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Mot.html">Mot</a></li></ul><h3>Classes</h3><ul><li><a href="module-Mot.Mot.html">Mot</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Jan 17 2024 14:43:07 GMT+0100 (heure normale d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
