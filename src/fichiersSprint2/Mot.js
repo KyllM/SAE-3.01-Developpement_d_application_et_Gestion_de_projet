@@ -238,7 +238,15 @@ export class Mot extends Donnee{
         console.log("minClavier : ", minClavier);
         console.log("minDamarau : ", minDamarau);
 
-
+        if(minClavier === 0 && minDamarau === 0){
+            for (let cle in listeClavier) {
+                // Vérifier si la valeur correspond à celle recherchée
+                if (listeClavier.hasOwnProperty(cle) && listeClavier[cle] === minClavier) {
+                  // Retourner la clé si la valeur est trouvée
+                  return cle;
+                }
+              }
+        }
         if (minClavier < minDamarau) {
             for (let cle in listeClavier) {
                 // Vérifier si la valeur correspond à celle recherchée
