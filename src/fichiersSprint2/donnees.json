@@ -59,7 +59,7 @@
         "genre" : "rock",
         "prix" : 10,
         "description" : "musique rythmée",
-        "image" : "image.jpg"
+        "image" : "image-jpg"
     },
     {
         "nomVinyle" : "Canon en ré majeur",
@@ -68,7 +68,7 @@
         "genre" : "classique",
         "prix" : 10,
         "description" : "musique douce",
-        "image" : "img/canon-re-majeur-pechelbel.jpg"
+        "image" : "canon-re-majeur-pechelbel-jpg"
     }
     ]
 }
